@@ -1,8 +1,7 @@
 <template>
   <div class="wrapper">
-    <div id="gradient" class="gradient" :style="currGradientStyle"> </div>
     <div class="parent">
-      <div class="wrapper"> </div>
+      <div class="inner_wrapper"> </div>
       <div class="header"> </div>
       <div class="welcome_msg_wrapper"> </div>
       <div class="footer"> </div>
@@ -60,7 +59,9 @@
 
     <div class="sam"></div>
     <div class="sagak"></div>
+    <div id="gradient" class="gradient" :style="currGradientStyle"> </div>
   </div>
+
 </template>
 
 
@@ -68,6 +69,7 @@
 .parent {
   background-color: #ffffff;
   opacity: 1;
+  z-index: 40;
 }
 .sam{
   position:absolute;
@@ -77,6 +79,7 @@
   height:0;
   border-right: 100vw solid #172b4d;
   border-top: 9vh solid transparent;
+  z-index: 10;
 }
 .sagak{
   position:absolute;
@@ -85,6 +88,7 @@
   width:100%;
   height:61%;
   background:#172b4d;
+  z-index: 11;
 }
 
 * {
@@ -99,7 +103,7 @@
   left: 0;
   right: 0;
   background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%);
-  z-index: -1;
+  z-index: 1;
 }
 .wrapper{
   height:100vh;
@@ -121,42 +125,98 @@ div {
   grid-column-gap: 2px;
   grid-row-gap: 2px;
 }
-.wrapper { grid-area: 1 / 7 / 31 / 25; }
-.header { grid-area: 1 / 7 / 3 / 25; }
-.welcome_msg_wrapper { grid-area: 3 / 7 / 8 / 25; }
-.login_wrapper { grid-area: 8 / 7 / 25 / 25; }
-.login_action { grid-area: 25 / 7 / 27 / 25; }
-.footer { grid-area: 27 / 7 / 31 / 25; }
-.header_logo { grid-area: 2 / 7 / 3 / 10; }
-.welcome_msg { grid-area: 4 / 12 / 7 / 20; }
-.login_inner { grid-area: 8 / 12 / 25 / 20; }
+.inner_wrapper {
+  grid-area: 1 / 7 / 31 / 25;
+  z-index: 40;
+}
+.header {
+  grid-area: 1 / 7 / 3 / 25;
+  z-index: 40;
+}
+.welcome_msg_wrapper {
+  grid-area: 3 / 7 / 8 / 25;
+  z-index: 40;
+}
+.login_wrapper {
+  grid-area: 8 / 7 / 25 / 25;
+  z-index: 40;
+}
+.login_action {
+  grid-area: 25 / 7 / 27 / 25;
+  z-index: 40;
+}
+.footer {
+  grid-area: 27 / 7 / 31 / 25;
+  z-index: 40;
+}
+.header_logo {
+  grid-area: 2 / 7 / 3 / 10;
+  z-index: 40;
+}
+.welcome_msg {
+  grid-area: 4 / 12 / 7 / 20;
+  z-index: 40;
+}
+.login_inner {
+  grid-area: 8 / 12 / 25 / 20;
+  z-index: 40;
+}
 .forget_pw {
   grid-area: 25 / 12 / 27 / 14;
   text-align: left;
+  z-index: 40;
 }
 .join {
   grid-area: 25 / 17 / 27 / 20;
   text-align: right;
+  z-index: 40;
 }
 .copyright {
   grid-area: 29 / 7 / 30 / 12;
   text-align: left;
+  z-index: 40;
 }
 .link {
   grid-area: 29 / 18 / 30 / 25;
   text-align: right;
+  z-index: 40;
 }
-.login_img_wrapper { grid-area: 8 / 12 / 13 / 20; }
-.login_msg_wrapper { grid-area: 13 / 12 / 16 / 20; }
-.login_input_wrapper { grid-area: 16 / 12 / 21 / 20; }
-.login_submit_wrapper { grid-area: 21 / 12 / 25 / 20; }
-.login_img { grid-area: 9 / 14 / 12 / 18; }
-.login_msg { grid-area: 13 / 13 / 15 / 19; }
-.login_user_id { grid-area: 16 / 13 / 18 / 19; }
-.login_user_pw { grid-area: 19 / 13 / 21 / 19; }
+.login_img_wrapper {
+  grid-area: 8 / 12 / 13 / 20;
+  z-index: 40;
+}
+.login_msg_wrapper {
+  grid-area: 13 / 12 / 16 / 20;
+  z-index: 40;
+}
+.login_input_wrapper {
+  grid-area: 16 / 12 / 21 / 20;
+  z-index: 40;
+}
+.login_submit_wrapper {
+  grid-area: 21 / 12 / 25 / 20;
+  z-index: 40;
+}
+.login_img {
+  grid-area: 9 / 14 / 12 / 18;
+  z-index: 40;
+}
+.login_msg {
+  grid-area: 13 / 13 / 15 / 19;
+  z-index: 40;
+}
+.login_user_id {
+  grid-area: 16 / 13 / 18 / 19;
+  z-index: 40;
+}
+.login_user_pw {
+  grid-area: 19 / 13 / 21 / 19;
+  z-index: 40;
+}
 .login_submit {
   grid-area: 22 / 15 / 24 / 17;
   text-align: center;
+  z-index: 40;
 }
 
 .list-enter-active {
