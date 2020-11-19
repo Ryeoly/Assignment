@@ -1,23 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/login'
-import Hello from '@/components/HelloWorld'
+import SplashPage from "@/components/SplashPage";
 
 Vue.use(Router)
 
 export default new Router({
-  mode:'history',
+  mode: 'history',
   routes: [
     {
       path: '/',
-      name: 'Login',
-      component: Login
+      name: 'SplashPage',
+      component: SplashPage
     },
     {
-      path: '/hello',
-      name: 'Hello',
-      component: Hello
+      path: '/login',
+      name: 'login',
+      component: Login
     }
   ]
 })
-
