@@ -1,15 +1,74 @@
 <template>
   <div class="wrapper">
-    <button @click="onClickRedirect()">대쉬보드 페이지로 가자</button>
     <div id="gradient" class="gradient" :style="currGradientStyle"> </div>
+    <div class="parent">
+      <div class="wrapper"> </div>
+      <div class="header"> </div>
+      <div class="welcome_msg_wrapper"> </div>
+      <div class="footer"> </div>
+      <div class="header_logo"> <p>header_logo</p> </div>
+      <div class="welcome_msg"> <p>welcome_msg</p> </div>
+      <div class="copyright"> <p>copyright</p> </div>
+      <div class="link"> <p>link</p> </div>
+      <div class="login_wrapper"> </div>
+      <transition name="list" appear>
+        <div class="login_inner"> </div>
+      </transition>
+      <transition name="list" appear>
+        <div class="login_img_wrapper"> </div>
+      </transition>
+      <transition name="list" appear>
+        <div class="login_img"> <p>login_img</p> </div>
+      </transition>
+      <transition name="list" appear>
+        <div class="login_msg_wrapper"> </div>
+      </transition>
+      <transition name="list" appear>
+        <div class="login_msg"> <p>login_msg</p> </div>
+      </transition>
+      <transition name="list" appear>
+        <div class="login_input_wrapper"> </div>
+      </transition>
+      <transition name="list" appear>
+        <div class="login_user_id">
+          <b-form-input type="text" size="lg" placeholder="Enter your ID"></b-form-input>
+        </div>
+      </transition>
+      <transition name="list" appear>
+        <div class="login_user_pw" :key="0">
+          <b-form-input type="password" size="lg" placeholder="Enter your Password"  :key="1"></b-form-input>
+        </div>
+      </transition>
+      <transition name="list" appear>
+        <div class="login_submit_wrapper"> </div>
+      </transition>
+      <transition name="list" appear>
+        <div class="login_submit"  :key="2">
+          <b-button variant="primary" :key="3">Submit</b-button>
+        </div>
+      </transition>
+      <transition name="list" appear>
+        <div class="login_action"> </div>
+      </transition>
+      <transition name="list" appear>
+        <div class="forget_pw"> <p>forget_pw</p> </div>
+      </transition>
+      <transition name="list" appear>
+        <div class="join"> <p>join</p> </div>
+      </transition>
+    </div>
+
     <div class="sam"></div>
     <div class="sagak"></div>
   </div>
-
 </template>
 
 
-<style>
+<style scoped>
+.parent {
+  background-color: #ffffff;
+  opacity: 1;
+}
 .sam{
   position:absolute;
   bottom:61%;
@@ -44,6 +103,68 @@
 }
 .wrapper{
   height:100vh;
+}
+
+html, body {
+  margin:0;
+  padding:0;
+  height:100%;
+}
+div {
+  border: thin solid #f44336;
+  height: 100%;
+}
+.parent {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  grid-template-rows: repeat(30, 1fr);
+  grid-column-gap: 2px;
+  grid-row-gap: 2px;
+}
+.wrapper { grid-area: 1 / 7 / 31 / 25; }
+.header { grid-area: 1 / 7 / 3 / 25; }
+.welcome_msg_wrapper { grid-area: 3 / 7 / 8 / 25; }
+.login_wrapper { grid-area: 8 / 7 / 25 / 25; }
+.login_action { grid-area: 25 / 7 / 27 / 25; }
+.footer { grid-area: 27 / 7 / 31 / 25; }
+.header_logo { grid-area: 2 / 7 / 3 / 10; }
+.welcome_msg { grid-area: 4 / 12 / 7 / 20; }
+.login_inner { grid-area: 8 / 12 / 25 / 20; }
+.forget_pw {
+  grid-area: 25 / 12 / 27 / 14;
+  text-align: left;
+}
+.join {
+  grid-area: 25 / 17 / 27 / 20;
+  text-align: right;
+}
+.copyright {
+  grid-area: 29 / 7 / 30 / 12;
+  text-align: left;
+}
+.link {
+  grid-area: 29 / 18 / 30 / 25;
+  text-align: right;
+}
+.login_img_wrapper { grid-area: 8 / 12 / 13 / 20; }
+.login_msg_wrapper { grid-area: 13 / 12 / 16 / 20; }
+.login_input_wrapper { grid-area: 16 / 12 / 21 / 20; }
+.login_submit_wrapper { grid-area: 21 / 12 / 25 / 20; }
+.login_img { grid-area: 9 / 14 / 12 / 18; }
+.login_msg { grid-area: 13 / 13 / 15 / 19; }
+.login_user_id { grid-area: 16 / 13 / 18 / 19; }
+.login_user_pw { grid-area: 19 / 13 / 21 / 19; }
+.login_submit {
+  grid-area: 22 / 15 / 24 / 17;
+  text-align: center;
+}
+
+.list-enter-active {
+  transition: all 1s;
+}
+.list-enter {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>
 
