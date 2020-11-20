@@ -4,11 +4,14 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {faAngleDown} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
-Vue.prototype.$http=axios
-
+library.add(faAngleDown)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false
-
+Vue.prototype.$http=axios
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -16,31 +16,62 @@
         <li><a href="url">기능3</a></li>
         <li><a href="url">기능4</a></li>
       </ul>
+      <li class="menu" v-for='list in menu_list'>
+        <router-link :to='list.link'> {{list.title}}</router-link>
+      </li>
       <hr color="gray" size="3px" width="80%">
-      <ul class="friend">
-        <li><a href="url2">친구1</a></li>
-        <li><a href="url2">친구2</a></li>
-        <li><a href="url2">친구3</a></li>
-        <li><a href="url2">친구4</a></li>
-      </ul>
+      <AppDropdown>
+        <template slot="toggler">
+          <p class="click-list">
+            친구목록
+            <font-awesome-icon aria-hidden="true" icon="angle-down" />
+          </p>
+        </template>
+        <AppDropdownContent class="friend-list">
+          <AppDropdownItem><li>친구1</li></AppDropdownItem>
+          <AppDropdownItem><li>친구2</li></AppDropdownItem>
+          <AppDropdownItem><li>친구3</li></AppDropdownItem>
+          <AppDropdownItem><li>친구4</li></AppDropdownItem>
+        </AppDropdownContent>
+      </AppDropdown>
     </div>
-
-
   </div>
 </template>
 
 <script>
+import AppDropdown from "./AppDropdown.vue";
+import AppDropdownContent from "./AppDropdownContent.vue";
+import AppDropdownItem from "./AppDropdownItem.vue";
+
 
 export default {
   name: 'HelloWorld',
   el: '#transition-components-demo',
   data() {
     return {
+      view: '',
+      menu_list: [
+        {link: '/', title: 'MAIN'},
+        {link: '/func1', title: 'FUNC1'},
+        {link: '/func2', title: 'FUNC2'},
+        {link: '/func3', title: 'FUNC3'}
+      ]
     }
   },
-  methods:{
-    test12:function(event){
-      this.$router.push({path:'/test1'})        // 버튼 누른 경우에는 이런식으로 페이지 이동, router-link 혹은 이거 쓸 수 있음
+  methods: {
+    test12: function (event) {
+      this.$router.push({path: '/test1'})        // 버튼 누른 경우에는 이런식으로 페이지 이동, router-link 혹은 이거 쓸 수 있음
+    }
+    components: {
+      'v-a': {
+        template: '<div>Component A</div>'
+      },
+      'v-b': {
+        template: '<div>Component B</div>'
+      },
+      AppDropdown,
+      AppDropdownContent,
+      AppDropdownItem
     }
   }
 }
@@ -48,6 +79,9 @@ export default {
 
 
 <style>
+a:link { color : gray; text-decoration: none;}
+a:visited {  color: gray; text-decoration: none;}
+a:hover { color: black; text-decoration: none;}
   .component-fade-enter-active, .component-fade-leave-active {
     transition: opacity .3s ease;
   }
@@ -106,4 +140,27 @@ export default {
     background-color: #5758bb;
     box-shadow: 2px 2px 2px lightgray;
   }
+
+  li.menu{
+    width : 100%;
+    list-style: none;
+    line-height: 3em;
+    font-family: sans-serif;
+  }
+  li.menu:hover, li.menu:focus {
+    background-color: #f2f2f2;
+  }
+  li.menu:active{
+    font-weight: 700;
+  }
+.friend-list li{
+  width: 100%;
+  list-style: none;
+  line-height: 3em;
+  font-family: sans-serif;
+}
+.friend-list li:hover, .friend-list li:focus {
+  background-color: #f2f2f2;
+}
+
 </style>
