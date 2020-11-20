@@ -2,13 +2,7 @@
   <div class="wrapper">
     <div class="one" style="text-align: right; color:white" >2016722021 윤인석</div>
     <div id="transition-components-demo">
-      <input type="radio" value="v-a" id="a" name="view" v-model="view">
-      <label for="a">A</label>
-      <input type="radio" value="v-b" id="b" name="view" v-model="view">
-      <label for="b">B</label>
-      <transition name="component-fade" mode="out-in">
-        <component v-bind:is="view"></component>
-      </transition>
+      <button v-on:click="test12">button</button>
     </div>
 
 
@@ -17,8 +11,8 @@
     <div class="four" style="background-color:white">
       <img src="../assets/Bluemango_logo.jpeg" alt="Logo" title="bluemango">
       <ul class="mylist">
-        <li><a href="url">main</a></li>
-        <li><a href="url">grade</a></li>
+        <router-link to="/test1">메인</router-link>
+        <router-link to="/test2">Go to Foo</router-link>
         <li><a href="url">기능3</a></li>
         <li><a href="url">기능4</a></li>
       </ul>
@@ -36,21 +30,18 @@
 </template>
 
 <script>
+
 export default {
   name: 'HelloWorld',
   el: '#transition-components-demo',
   data() {
     return {
-      view: ''
     }
   },
-  components: {
-      'v-a': {
-        template: '<div>Component A</div>'
-      },
-      'v-b': {
-        template: '<div>Component B</div>'
-      }
+  methods:{
+    test12:function(event){
+      this.$router.push({path:'/test1'})        // 버튼 누른 경우에는 이런식으로 페이지 이동, router-link 혹은 이거 쓸 수 있음
+    }
   }
 }
 </script>
