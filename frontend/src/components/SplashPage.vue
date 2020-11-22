@@ -1,37 +1,45 @@
 <template>
   <div class="splashscreen-wrapper">
-    <transition @leave="leaveEl" v-on:after-appear="leaveEl"  appear>
-      <div class="logo-wrapper">
-      </div>
-    </transition>
     <div class="logo-letters-group">
-      <span class="logo-letter" v-for="(item, index) in logoName" :key="index">{{item}}</span>
+      <transition-group name="letters"
+                        @after-enter="afterEnter"
+                        @before-enter="beforeEnter"
+                        appear>
+        <span class="logo-letter" v-for="(item, index) in logoName" :data-index="index" :key="item">{{item}}</span>
+      </transition-group>
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: 'SplashScreen',
   data() {
     return {
       show: true,
-      logoName: ['B', 'L', 'U', 'E', 'M', 'A', 'N', 'G', 'O']
+      logoName: ['B','L','U','E','M','A','N','G','O']
     }
   },
   methods: {
-    leaveEl(el) {
-      this.$router.push('/login')
+    beforeEnter: function(el) {
+      el.style.transitionDelay = parseInt(el.dataset.index, 10) * 100 + 'ms'
+      console.log(el.dataset.index)
+    },
+    afterEnter: function (el) {
+      if(parseInt(el.dataset.index, 10) === 8) {
+        this.$router.push('/login')
+      }
     }
   }
 }
 </script>
+
 
 <style lang="scss" scoped>
 .splashscreen-wrapper {
   position: relative;
   height: 100%;
   width: 100%;
+
   .logo-wrapper {
     height: 30vh;
     width: 30vw;
@@ -40,9 +48,10 @@ export default {
     top: 50%;
     margin-left: -15vw;
     margin-top: -15vh;
-    animation: image 2s ease-in-out 6s 1 normal forwards;
+    animation: image 1s ease-in-out 2s 1 normal forwards;
     box-sizing: border-box;
   }
+
   .logo-letters-group {
     height: 10vh;
     letter-spacing: 3px;
@@ -54,197 +63,15 @@ export default {
     margin-top: 20vh;
     margin-left: -50vw;
     width: 100vw;
-    .logo-letter {
-      animation-iteration-count: 1, 1;
-      animation-name            : fromBlackToGreen, disappear;
-      animation-duration        : 0.2s, 0.2s;
-      animation-direction       : normal, normal;
-      animation-fill-mode: forwards, forwards;
-      img {
-        height: 3vh;
-      }
-    }
-    @for $n from (27)*-1 through -1 {
-      span:nth-child(#{abs($n)}) { animation-delay: $n * 0.1s + 2s, abs($n) * 0.1s + 2s}
-    }
-  }
-  @-webkit-keyframes fromBlackToGreen {
-    0%   {
-      color: #00b894;
-    }
-    100% {
-      // opacity: 0;
-      color: #00b894;
-    }
-  }
-  @keyframes fromBlackToGreen {
-    0%   {
-      color: #333;
-    }
-    100% {
-      color: #00b894;
-    }
-  }
-
-  @keyframes disappear {
-    0%   {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-
-  @keyframes image {
-    0% {
-      left: 50%;
-      top: 50%;
-      margin-left: -15vw;
-      margin-top: -15vh;
-      height: 30vh;
-      width: 30vw;
-    }
-    25% {
-      left: 50%;
-      top: 50%;
-      height: 120vh;
-      width: 120vw;
-      margin-left: -60vw;
-      margin-top: -60vh;
-    }
-    100% {
-      left: 0;
-      top:  50%;
-      height: 180vh;
-      width: 120vw;
-      margin-left: -59vw;
-      margin-top: -60vh;
-    }
   }
 }
 
-@media only screen and (max-width: 600px) {
-  @keyframes image {
-    0% {
-      left: 50%;
-      top: 50%;
-      margin-left: -15vw;
-      margin-top: -15vh;
-      height: 30vh;
-      width: 30vw;
-    }
-    100% {
-      height: 180vh;
-      width: 273vw;
-      margin-left: -137.5vw;
-      margin-top: -90vh;
-      left: 50%;
-      top: 50%;
-    }
-  }
+.letters-enter-active {
+  transition: all .3s ease;
 }
 
-@media screen and (min-width:600px) and (max-width:760px){
-  @keyframes image {
-    0% {
-      left: 50%;
-      top: 50%;
-      margin-left: -15vw;
-      margin-top: -15vh;
-      height: 30vh;
-      width: 30vw;
-    }
-    100% {
-      left: 50%;
-      top: 50%;
-      height: 120vh;
-      width: 289vw;
-      margin-left: -144.5vw;
-      margin-top: -60vh;
-    }
-  }
-}
-@media screen and (min-width:760px) and (max-width:938px){
-  @keyframes image {
-    0% {
-      left: 50%;
-      top: 50%;
-      margin-left: -15vw;
-      margin-top: -15vh;
-      height: 30vh;
-      width: 30vw;
-    }
-    100% {
-      left: 50%;
-      top: 50%;
-      height: 100vh;
-      width: 304vw;
-      margin-left: -152.5vw;
-      margin-top: -50vh;
-    }
-  }
-}
-
-@media screen and (min-width:939px) and (max-width:970px){
-  @keyframes image {
-    0% {
-      left: 50%;
-      top: 50%;
-      margin-left: -15vw;
-      margin-top: -15vh;
-      height: 30vh;
-      width: 30vw;
-    }
-    100% {
-      left: 0;
-      top: 20%;
-      height: 180vh;
-      width: 151vw;
-      margin-left: -53vw;
-      margin-top: -60vh;
-    }
-  }
-}
-
-@media screen and (min-width:971px) and (max-width:1036px){
-  @keyframes image {
-    0% {
-      left: 50%;
-      top: 50%;
-      margin-left: -15vw;
-      margin-top: -15vh;
-      height: 30vh;
-      width: 30vw;
-    }
-    100% {
-      left: -12%;
-      top: 20%;
-      height: 180vh;
-      width: 151vw;
-      margin-left: -53vw;
-      margin-top: -60vh;
-    }
-  }
-}
-
-@media screen and (min-width:1037px) and (max-width:1380px){
-  @keyframes image {
-    0% {
-      left: 50%;
-      top: 50%;
-      margin-left: -15vw;
-      margin-top: -15vh;
-      height: 30vh;
-      width: 30vw;
-    }
-    100% {
-      left: 0;
-      top: 32%;
-      height: 180vh;
-      width: 140vw;
-      margin-left: -59vw;
-      margin-top: -60vh;
-    }
-  }
+.letters-enter, .letters-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>
