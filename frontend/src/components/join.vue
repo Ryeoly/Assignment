@@ -22,10 +22,11 @@
                             :key="item"
                             :style="[item === 'PW' ? {padding: pw_padding+'px 0 0 0'} : {padding: '27px 0 0 0'}]"
               >
-                <b-form-input :id="item" :key="item" v-model="user_input[item]" :placeholder="item" v-if="item !== 'ID' && item !== 'Birth' && item !=='PW' && item !=='PW_Check' && item !== 'Tel'" :state="state_list[item]"></b-form-input>
+                <b-form-input :id="item" :key="item" v-model="user_input[item]" :placeholder="item" v-if="item !== 'ID' && item !== 'Birth' && item !=='PW' && item !=='PW_Check' && item !== 'Tel' && item !== 'email'" :state="state_list[item]"></b-form-input>
                 <b-form-input :id="item" v-model="user_input[item]" class="password" type="password" v-else-if="item === 'PW'" :state="state_list['PW']" v-on:keyup="check_PW()"></b-form-input>
                 <b-form-input :id="item" v-model.lazy="user_input[item]" class="password" type="password" v-else-if="item === 'PW_Check'" :state="state_list['PW_Check']" v-on:keyup="check_PW()"></b-form-input>
-                <b-form-input :id="item" v-model="user_input[item]" v-else-if="item === 'Tel'" :state="state_list['Tel']" v-on:keyup="check_tel()" onKeyup="this.value=this.value.replace(/[^0-9-]/g,'')"></b-form-input>
+                <b-form-input :id="item" v-model="user_input[item]" placeholder="OOO-OOOO-OOOO" v-else-if="item === 'Tel'" :state="state_list['Tel']" v-on:keyup="check_tel()" onKeyup="this.value=this.value.replace(/[^0-9-]/g,'')"></b-form-input>
+                <b-form-input :id="item" v-model="user_input[item]" placeholder="OOO@OOO.OOO" v-else-if="item === 'email'" :state="state_list['email']" v-on:keyup="check_email()"></b-form-input>
                 <div v-else-if="item === 'Birth'">
                   <b-input-group>
                     <b-form-input
@@ -322,11 +323,11 @@ export default {
     }
   },
   methods: {
+    check_email: function () {
+      this.state_list.email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(this.user_input.email);
+    },
     check_tel: function () {
-      if (/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(this.user_input.Tel)) {
-        this.state_list.Tel = true;
-      }
-      this.state_list.Tel =  false;
+      this.state_list.Tel = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(this.user_input.Tel);
     },
     join_submit: function () {
       let wrong = false;
@@ -339,7 +340,8 @@ export default {
         }
         else outer.state_list[item] = true;
       });
-      this.state_list.Tel = this.check_PW();
+      this.state_list.Tel = this.check_tel();
+      this.state_list.email = this.check_email();
 
       if (wrong === false) {
         this.$http.post('http://localhost:3000/api/join', this.user_input).then(response => {

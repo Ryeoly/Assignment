@@ -54,8 +54,7 @@ router.post('/join', function(req, res, next) {
     console.log(req.body);
     pool.getConnection(function (err, connection) {
         connection.query("INSERT INTO person (pnum, pyear, pmajor, pwd, name, tel, addr, birth, email, admin) SELECT CASE WHEN MAX(pnum) is NULL THEN 1 ELSE MAX(pnum)+1 END, ?,?,?,?,?, ?,?,?,0 FROM person WHERE pyear=? and pmajor=?",
-            [req.body.ID.p_year, req.body.ID.p_major, req.body.PW, req.body.Name, req.body.Tel, req.body.addr, req.body.Birth, req.body.email, req.body.ID.p_year, req.body.ID.p_major], function(err, results) {
-            console.log(results[0].next);
+            [parseInt(req.body.ID.p_year), parseInt(req.body.ID.p_major), req.body.PW, req.body.Name, req.body.Tel, req.body.addr, req.body.Birth, req.body.email, parseInt(req.body.ID.p_year), parseInt(req.body.ID.p_major)], function(err, results) {
             if (err) {
                 return res.json({success: false});
             }
