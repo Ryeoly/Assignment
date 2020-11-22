@@ -1,19 +1,24 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import test1 from '@/components/test1'
+import mainframe from '@/components/mainframe'
+import noticeframe from '@/components/noticeframe'
+import enrollframe from '@/components/enrollframe'
+
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      component: mainframe
     },
     {
-      path: '/test1',
-      component: test1
+      path: '/notice',
+      component: noticeframe
+    },
+    {
+      path: '/enroll',
+      component: enrollframe
     }
   ]
 })
