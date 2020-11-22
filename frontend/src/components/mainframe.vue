@@ -1,9 +1,6 @@
 <template>
   <div class="wrapper">
     <div class="one" style="text-align: right; color:white">2016722021 윤인석</div>
-    <div id="transition-components-demo">
-      <button v-on:click="test12">button</button>
-    </div>
     <div class="two" style="background-color: midnightblue">Two</div>
     <div class="three" style="background-color:white">
       <table class="type11">

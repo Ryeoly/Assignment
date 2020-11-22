@@ -14,7 +14,7 @@
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.19.0",
     "node-sass": "^4.14.1",
-    "vue": "^2.5.2",
+    "vue": "^2.6.12",
     "vue-clickaway": "^2.2.2",
     "vue-router": "^3.0.1"
   },

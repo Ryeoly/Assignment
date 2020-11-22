@@ -25,26 +25,7 @@ export default {
   data(){
     return {
       schedule:[6][5],
-      db_result: [],
-      0:{
-        backgroundColor: 'blue'
-      },
-      1:{
-        backgroundColor: 'black'
-      },
-      2:{
-        backgroundColor: 'blue'
-      },
-      3:{
-        backgroundColor: 'blue'
-      },
-      4:{
-        backgroundColor: 'blue'
-      },
-      5:{
-        backgroundColor: 'blue'
-      }
-
+      db_result: []
     }
   }
 }

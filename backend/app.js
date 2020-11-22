@@ -1,3 +1,5 @@
+// import enrollframe from "../frontend/src/components/enrollframe";
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -7,6 +9,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var timetableRouter = require('./routes/timetable');
+var enrolltableRouter = require('./routes/enrolltable')
 
 var app = express();
 
@@ -23,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/timetable', timetableRouter);
+app.use('/enrolltable', enrolltableRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
