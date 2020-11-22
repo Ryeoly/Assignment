@@ -9,59 +9,28 @@
       <div class="welcome_msg"> <p>welcome_msg</p> </div>
       <div class="copyright"> <p>copyright</p> </div>
       <div class="link"> <p>link</p> </div>
-      <div class="login_wrapper"> </div>
-      <transition name="list" appear>
-        <div class="login_inner"> </div>
-      </transition>
-      <transition name="list" appear>
-        <div class="login_img_wrapper"> </div>
-      </transition>
-      <transition name="list" appear>
-        <div class="login_img"> <p>login_img</p> </div>
-      </transition>
-      <transition name="list" appear>
-        <div class="login_msg_wrapper"> </div>
-      </transition>
-      <transition name="list" appear>
-        <div class="login_msg"> <p>login_msg</p> </div>
-      </transition>
-      <transition name="list" appear>
-        <div class="login_input_wrapper"> </div>
-      </transition>
-      <transition name="list" appear>
-        <div class="login_user_id">
-          <b-form-input type="text" size="lg" placeholder="Enter your ID"></b-form-input>
+      <transition-group name="list" tag="div" class="login_wrapper" appear>
+        <div v-for="component in components" :class="component" :key="component" v-if="show">
+          <p v-if="component === 'login_img'">login_img</p>
+          <p v-if="component === 'login_msg'">login_msg</p>
+          <b-form-input class="form-control border-0" type="text" size="lg" placeholder="Enter your ID" v-model="pid" v-if="component === 'login_user_id'" :state="pid_check" v-on:keyup="check_pid()" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"></b-form-input>
+          <b-form-invalid-feedback id="input-live-feedback">
+            {{pid_msg}}
+          </b-form-invalid-feedback>
+          <b-form-input class="form-control border-0" type="password" size="lg" placeholder="Enter your Password" v-model="pwd" v-if="component === 'login_user_pw'" :state="login_success"></b-form-input>
+          <b-form-invalid-feedback id="input-live-feedback">
+            비밀번호가 틀렸습니다.
+          </b-form-invalid-feedback>
+          <b-button class="login_btn" block variant="info" size="lg" v-on:click="loginEL()" v-if="component === 'login_submit'">Login</b-button>
+          <p v-if="component === 'forget_pw'">forget_pw</p>
+          <p v-on:click="joinEL" v-if="component === 'join'">join</p>
         </div>
-      </transition>
-      <transition name="list" appear>
-        <div class="login_user_pw" :key="0">
-          <b-form-input type="password" size="lg" placeholder="Enter your Password"  :key="1"></b-form-input>
-        </div>
-      </transition>
-      <transition name="list" appear>
-        <div class="login_submit_wrapper"> </div>
-      </transition>
-      <transition name="list" appear>
-        <div class="login_submit"  :key="2">
-          <b-button variant="primary" :key="3">Submit</b-button>
-        </div>
-      </transition>
-      <transition name="list" appear>
-        <div class="login_action"> </div>
-      </transition>
-      <transition name="list" appear>
-        <div class="forget_pw"> <p>forget_pw</p> </div>
-      </transition>
-      <transition name="list" appear>
-        <div class="join"> <p>join</p> </div>
-      </transition>
+      </transition-group>
     </div>
-
     <div class="sam"></div>
     <div class="sagak"></div>
     <div id="gradient" class="gradient" :style="currGradientStyle"> </div>
   </div>
-
 </template>
 
 
@@ -115,7 +84,6 @@ html, body {
   height:100%;
 }
 div {
-  border: thin solid #f44336;
   height: 100%;
 }
 .parent {
@@ -138,11 +106,16 @@ div {
   z-index: 40;
 }
 .login_wrapper {
-  grid-area: 8 / 7 / 25 / 25;
+  grid-area: 8 / 7 / 27 / 25;
   z-index: 40;
+  display: grid;
+  grid-template-columns: repeat(18, 1fr);
+  grid-template-rows: repeat(19, 1fr);
+  grid-column-gap: 2px;
+  grid-row-gap: 2px;
 }
 .login_action {
-  grid-area: 25 / 7 / 27 / 25;
+  grid-area: 18 / 1 / 20 / 19;
   z-index: 40;
 }
 .footer {
@@ -158,18 +131,22 @@ div {
   z-index: 40;
 }
 .login_inner {
-  grid-area: 8 / 12 / 25 / 20;
+  grid-area: 1 / 6 / 18 / 14;
   z-index: 40;
+  background-color: #f8fafc;
+  border-radius: 2%;
 }
 .forget_pw {
-  grid-area: 25 / 12 / 27 / 14;
+  grid-area: 18 / 6 / 19 / 8;
   text-align: left;
   z-index: 40;
 }
 .join {
-  grid-area: 25 / 17 / 27 / 20;
+  grid-area: 18 / 12 / 19 / 14;
   text-align: right;
   z-index: 40;
+  color:#ffffff;
+  font-size:20px;
 }
 .copyright {
   grid-area: 29 / 7 / 30 / 12;
@@ -182,50 +159,65 @@ div {
   z-index: 40;
 }
 .login_img_wrapper {
-  grid-area: 8 / 12 / 13 / 20;
+  grid-area: 1 / 6 / 6 / 14;
   z-index: 40;
 }
 .login_msg_wrapper {
-  grid-area: 13 / 12 / 16 / 20;
+  grid-area: 6 / 6 / 9 / 14;
   z-index: 40;
 }
 .login_input_wrapper {
-  grid-area: 16 / 12 / 21 / 20;
+  grid-area: 9 / 6 / 14 / 14;
   z-index: 40;
 }
 .login_submit_wrapper {
-  grid-area: 21 / 12 / 25 / 20;
+  grid-area: 14 / 6 / 18 / 14;
   z-index: 40;
 }
 .login_img {
-  grid-area: 9 / 14 / 12 / 18;
+  grid-area: 2 / 8 / 5 / 12;
   z-index: 40;
 }
 .login_msg {
-  grid-area: 13 / 13 / 15 / 19;
+  grid-area: 6 / 7 / 8 / 13;
   z-index: 40;
 }
 .login_user_id {
-  grid-area: 16 / 13 / 18 / 19;
+  grid-area: 9 / 7 / 11 / 13;
   z-index: 40;
 }
 .login_user_pw {
-  grid-area: 19 / 13 / 21 / 19;
+  grid-area: 12 / 7 / 14 / 13;
   z-index: 40;
 }
 .login_submit {
-  grid-area: 22 / 15 / 24 / 17;
+  grid-area: 15 / 9 / 17 / 11;
   text-align: center;
   z-index: 40;
 }
 
-.list-enter-active {
+.list-enter-active, .list-leave-active {
   transition: all 1s;
 }
 .list-enter {
   opacity: 0;
   transform: translateY(30px);
 }
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+.form-control {
+  box-shadow: 0 2px 2px #d0d2d7;
+}
+
+.login_btn {
+  background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%);
+  border: none;
+  height: 50%
+}
+
 </style>
 
 <script>
@@ -253,14 +245,65 @@ export default {
 
       currGradientStyle: {
         backgroundImage: null
-      }
+      },
+      components: [
+        "login_inner",
+        "login_img_wrapper",
+        "login_img",
+        "login_msg_wrapper",
+        "login_msg",
+        "login_input_wrapper",
+        "login_user_id",
+        "login_user_pw",
+        "login_submit_wrapper",
+        "login_submit",
+        "login_action",
+        "forget_pw",
+        "join",
+      ],
+      show: true,
+      pid: '',
+      pwd: '',
+      pid_check: null,
+      pid_msg: '',
+      login_success: null
     }
   },
   methods: {
-    onClickRedirect: function(event){
-      this.$router.push('/hello')
+    joinEL: function () {
+      this.show = false
+      setTimeout(() => {
+        this.$router.push('/join');
+      }, 1000)
     },
-
+    check_pid: function () {
+      if(this.pid.length === 0) this.pid_check = null;
+      else if(this.pid.length===10) {
+        this.$http.post('http://localhost:3000/api/pid', {pid: this.pid}).then(response => {
+          console.log(response.data.isSuccess);
+          if(response.data.isSuccess === false) this.pid_msg = "없는 학번입니다."
+          this.pid_check = !!response.data.isSuccess;
+        });
+      }
+      else {
+        this.pid_msg = "10자리 숫자를 입력하세요";
+        this.pid_check = false;
+      }
+    },
+    loginEL: function () {
+      this.$http.post('http://localhost:3000/api/login', {pid: this.pid, pwd: this.pwd}).then(response => {
+        console.log(response.data.isSuccess);
+        if(response.data.isSuccess) {
+          this.show = false
+          setTimeout(() => {
+            this.$router.push('/main');
+          }, 1000);
+        }
+        else {
+          this.login_success = false;
+        }
+      });
+    },
     nextStep(n) {
       return (n + 1 < colors.length) ? n + 1 : 0
     },
@@ -273,12 +316,10 @@ export default {
           for (var i = 0; i < 3; i++) {
             this.rgbValues[key][i] = this.colors[this.currIdx][key][i]
             this.rgbSteps[key][i] = this.calcStepSize(this.colors[this.nextIdx][key][i], this.rgbValues[key][i])
-            //console.log(this.rgbSteps[key])
           }
         }
       }
     },
-    //////////////////////
     updateGradient() {
       for (let key in this.rgbValues) {
         if (this.rgbValues) {
@@ -315,6 +356,6 @@ export default {
   created() {
     this.calcSteps()
     window.requestAnimationFrame(this.updateGradient)
-  }
+  },
 }
 </script>
