@@ -35,11 +35,6 @@
 
 
 <style scoped>
-.parent {
-  background-color: #ffffff;
-  opacity: 1;
-  z-index: 40;
-}
 .sam{
   position:absolute;
   bottom:61%;
@@ -87,6 +82,9 @@ div {
   height: 100%;
 }
 .parent {
+  background-color: #ffffff;
+  opacity: 1;
+  z-index: 40;
   display: grid;
   grid-template-columns: repeat(30, 1fr);
   grid-template-rows: repeat(30, 1fr);
@@ -215,7 +213,6 @@ div {
 .login_btn {
   background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%);
   border: none;
-  height: 50%
 }
 
 </style>

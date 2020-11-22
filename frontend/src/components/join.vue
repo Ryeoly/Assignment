@@ -22,9 +22,10 @@
                             :key="item"
                             :style="[item === 'PW' ? {padding: pw_padding+'px 0 0 0'} : {padding: '27px 0 0 0'}]"
               >
-                <b-form-input :id="item" :key="item" v-model="user_input[item]" :placeholder="item" v-if="item !== 'ID' && item !== 'Birth' && item !=='PW' && item !=='PW_Check'"></b-form-input>
-                <b-form-input :id="item" v-model="user_input[item]" class="password" type="password" v-else-if="item === 'PW'" :state="check_PW()"></b-form-input>
-                <b-form-input :id="item" v-model.lazy="user_input[item]" class="password" type="password" v-else-if="item === 'PW_Check'" :state="check_PW()"></b-form-input>
+                <b-form-input :id="item" :key="item" v-model="user_input[item]" :placeholder="item" v-if="item !== 'ID' && item !== 'Birth' && item !=='PW' && item !=='PW_Check' && item !== 'Tel'" :state="state_list[item]"></b-form-input>
+                <b-form-input :id="item" v-model="user_input[item]" class="password" type="password" v-else-if="item === 'PW'" :state="state_list['PW']" v-on:keyup="check_PW()"></b-form-input>
+                <b-form-input :id="item" v-model.lazy="user_input[item]" class="password" type="password" v-else-if="item === 'PW_Check'" :state="state_list['PW_Check']" v-on:keyup="check_PW()"></b-form-input>
+                <b-form-input :id="item" v-model="user_input[item]" v-else-if="item === 'Tel'" :state="state_list['Tel']" v-on:keyup="check_tel()" onKeyup="this.value=this.value.replace(/[^0-9-]/g,'')"></b-form-input>
                 <div v-else-if="item === 'Birth'">
                   <b-input-group>
                     <b-form-input
@@ -62,7 +63,7 @@
               </b-form-group>
             </b-form-group>
           </b-card>
-          <b-button v-on:click="test_submit" class="submit_btn" block variant="info" size="lg" v-else>Submit</b-button>
+          <b-button v-on:click="join_submit" class="submit_btn" block variant="info" size="lg" v-else>Submit</b-button>
         </div>
       </transition-group>
       <div class="copyright"></div>
@@ -78,11 +79,16 @@
 
 
 <style lang="scss" scoped>
-.submit_btn {
-  text-align: center;
+.btn-block {
+  display: block;
 }
 
-.id_input {
+.form-row {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.form-row>.col {
   padding-left: 0;
   padding-right: 0;
 }
@@ -94,23 +100,9 @@
 }
 
 .id_input_box2 {
-  border-radius: 0;
-  border-top: 1px solid #ced4da;
-  border-bottom: 1px solid #ced4da;
-  border-left: 0;
-  border-right: 0;
-  box-shadow: 0 2px 2px #d0d2d7;
-}
-
-.id_input_box3 {
   border-radius: 0 .25rem .25rem 0;
   border: 1px solid #ced4da;
-}
-
-.parent {
-  background-color: #ffffff;
-  opacity: 1;
-  z-index: 11;
+  box-shadow: 0 2px 2px #d0d2d7;
 }
 
 .sam {
@@ -164,14 +156,9 @@ div {
 }
 
 .parent {
-  display: grid;
-  grid-template-columns: repeat(30, 1fr);
-  grid-template-rows: repeat(30, 1fr);
-  grid-column-gap: 2px;
-  grid-row-gap: 2px;
-}
-
-.parent {
+  background-color: #ffffff;
+  opacity: 1;
+  z-index: 11;
   display: grid;
   grid-template-columns: repeat(30, 1fr);
   grid-template-rows: repeat(30, 1fr);
@@ -222,7 +209,6 @@ div {
 .submit_btn {
   background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%);
   border: none;
-  height: 50%;
   z-index: 11;
 }
 
@@ -260,6 +246,10 @@ div {
 
 .form-control {
   box-shadow: 0 2px 2px #d0d2d7;
+}
+
+.form-group {
+  margin-bottom: 0;
 }
 </style>
 
@@ -299,6 +289,15 @@ export default {
         email: '',
         addr: ''
       },
+      state_list: {
+        PW: null,
+        PW_Check: null,
+        Name: null,
+        Tel: null,
+        Birth: null,
+        email: null,
+        addr: null
+      },
       components: [
         'join_inner',
         'submit'
@@ -323,15 +322,34 @@ export default {
     }
   },
   methods: {
-    test_submit: function () {
-      console.log(this.user_input);
+    check_tel: function () {
+      if (/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(this.user_input.Tel)) {
+        this.state_list.Tel = true;
+      }
+      this.state_list.Tel =  false;
     },
-    joinEL: function () {
-      this.show = false;
-      setTimeout(this.goto_join, 1000);
-    },
-    goto_join: function () {
-      this.$router.push('/login');
+    join_submit: function () {
+      let wrong = false;
+      let outer = this;
+
+      Object.keys(this.state_list).forEach(function (item) {
+        if (outer.user_input[item].length === 0) {
+          outer.state_list[item] = false;
+          wrong = true;
+        }
+        else outer.state_list[item] = true;
+      });
+      this.state_list.Tel = this.check_PW();
+
+      if (wrong === false) {
+        this.$http.post('http://localhost:3000/api/join', this.user_input).then(response => {
+          if(response.data.success === true) {
+            setTimeout(() => {
+              this.$router.push('/login');
+            }, 1000);
+          }
+        });
+      }
     },
     hakbungen() {
       if(this.user_input.ID.p_year==null || this.user_input.ID.p_major==null) {
@@ -346,12 +364,17 @@ export default {
       }
     },
     check_PW() {
-      if(this.user_input.PW === '' || this.user_input.PW_Check === '') return null;
+      if(this.user_input.PW === '' || this.user_input.PW_Check === '') {
+        this.state_list.PW = null;
+        this.state_list.PW_Check = null;
+        return null;
+      }
+      this.state_list.PW = this.user_input.PW === this.user_input.PW_Check;
+      this.state_list.PW_Check = this.user_input.PW === this.user_input.PW_Check;
       return this.user_input.PW === this.user_input.PW_Check;
     },
     onContext(ctx) {
       this.user_input.Birth = ctx.selectedYMD
-      console.log(this.b_date)
     },
     nextStep(n) {
       return (n + 1 < colors.length) ? n + 1 : 0
@@ -404,7 +427,6 @@ export default {
     }
   },
   created() {
-    console.log(Object.keys(this.user_input));
     this.calcSteps()
     window.requestAnimationFrame(this.updateGradient)
   },
