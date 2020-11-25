@@ -3,10 +3,11 @@ import Router from 'vue-router'
 import mainframe from '@/components/mainframe'
 import noticeframe from '@/components/noticeframe'
 import enrollframe from '@/components/enrollframe'
+import resultframe from '@/components/resultframe'
 import Login from '@/components/login'
 import SplashPage from "@/components/SplashPage";
 import Join from "@/components/join";
-
+import view from "@/components/view-detail";
 Vue.use(Router)
 
 export default new Router({
@@ -20,6 +21,10 @@ export default new Router({
       component: Login
     },
     {
+      path: '/result',
+      component: resultframe
+    },
+    {
       path: '/Join',
       component: Join
     },
@@ -28,12 +33,20 @@ export default new Router({
       component: mainframe
     },
     {
-      path: '/notice',
-      component: noticeframe
+      path: '/notice/:snum',
+      name: 'notice',
+      component: noticeframe,
+      props: true
     },
     {
       path: '/enroll',
       component: enrollframe
+    },
+    {
+      path: '/viewdetail/:index',
+      component: view,
+      name: 'view',
+      props: true
     }
   ]
 })

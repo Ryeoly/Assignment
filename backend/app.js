@@ -11,7 +11,11 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var timetableRouter = require('./routes/timetable');
 var enrolltableRouter = require('./routes/enrolltable')
+var resultpersonRouter = require('./routes/resultperson')
+var mainRouter = require('./routes/maintable');
 var apiRouter = require('./routes/api')
+var noticeRouter = require('./routes/notice');
+var viewRouter = require('./routes/viewdetail');
 
 var app = express();
 
@@ -30,7 +34,22 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/timetable', timetableRouter);
 app.use('/enrolltable', enrolltableRouter);
+app.use('/enrolltable/detail', enrolltableRouter);
+app.use('/enrolltable/cart', enrolltableRouter);
+app.use('/enrolltable/delcart', enrolltableRouter);
 app.use('/api', apiRouter);
+app.use('/resultperson', resultpersonRouter);
+app.use('/maintable', mainRouter);
+app.use('/maintable/add_friend', mainRouter);
+app.use('/maintable/accept', mainRouter);
+app.use('/maintable/reject', mainRouter);
+app.use('/maintable/calltable', mainRouter);
+app.use('/notice',noticeRouter);
+app.use('/notice/search',noticeRouter);
+app.use('/viewdetail', viewRouter);
+app.use('/viewdetail/lookup', viewRouter);
+app.use('/viewdetail/input', viewRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
