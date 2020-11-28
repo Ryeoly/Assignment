@@ -323,7 +323,7 @@
         apply_list:[],
         user : '2018722007',
         db_result:[],
-        class_list:[],
+        class_list:[{snum:'', sname:'', grid_time:''}],
         notice_list:[],
         friend_table:[],
         semester: '20-2',
@@ -377,6 +377,7 @@
       db_init: function() {
         this.$http.post('/maintable', {user: this.user, semes:this.semester}).then((response) => {
           this.db_result = response.data;
+          console.log(this.db_result);
           if(this.db_result.friend_list.length!==0)
             this.friend_list = this.db_result.friend_list;
           if(this.db_result.rows2.length!==0)

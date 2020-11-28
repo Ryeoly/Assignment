@@ -5,10 +5,10 @@ var passport = require('passport');
 
 var pool = mysql.createPool({
     connectionLimit: 5,
-    host     : '223.194.43.120',
+    host     : 'assign.bluemango.me',
     user     : 'root',
     password : '1234!',
-    database : 'helper'
+    database : 'db_project'
 });
 
 router.get('/login', function (req, res, next){

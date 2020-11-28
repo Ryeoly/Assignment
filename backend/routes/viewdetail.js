@@ -8,7 +8,7 @@ let connection = mysql.createPool({
     port: 3306,          // DB와 연결할 포트번호
     user: 'root',        // 계정이름
     password: '1234!',    // 계정 비밀번호
-    database: 'helper'    // 데이터베이스 이름
+    database: 'db_project'    // 데이터베이스 이름
 });
 //////////////////////   페이지 생성 공지사항 정보  /////////////////////////////
 router.post('/', function (req, res, next) {

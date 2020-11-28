@@ -7,7 +7,7 @@ let connection = mysql.createConnection({
     port: 3306,          // DB와 연결할 포트번호
     user: 'root',        // 계정이름
     password: '1234!',    // 계정 비밀번호
-    database: 'helper'    // 데이터베이스 이름
+    database: 'db_project'    // 데이터베이스 이름
 });
 
 /* GET users listing. */
@@ -30,7 +30,7 @@ router.post('/', function (req, res, next) {
                     if (err) console.log(err)        // 만약 에러값이 존재한다면 로그에 표시합니다.
 
                     var query2 = connection.query(
-                        'select sub.* from score as sc, subject as sub where sc.pid = ? and sc.snum=sub.snum and sub.semester=?',[req.body.user,req.body.semes],
+                        'select sub.* from score as sc, subject as sub where sc.pid = ? and sc.snum=sub.snum and sc.semester=?',[req.body.user,req.body.semes],
                         function (err, rows2) {
                             if (err) console.log(err)        // 만약 에러값이 존재한다면 로그에 표시합니다.
                             var query2 = connection.query(
@@ -38,7 +38,7 @@ router.post('/', function (req, res, next) {
                                 function (err, notice) {
                                     if (err) console.log(err)        // 만약 에러값이 존재한다면 로그에 표시합니다.
                                     console.log(notice);
-                                    res.json({apply_list, friend_list,rows2, notice});
+                                    res.json({apply_list, friend_list, rows2, notice});
                                 });
                         });
 

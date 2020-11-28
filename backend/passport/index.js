@@ -6,7 +6,7 @@ var pool = mysql.createPool({
     host: '223.194.43.120',
     user: 'root',
     password: '1234!',
-    database: 'helper'
+    database: 'db_project'
 });
 
 exports.config = (passport) => {

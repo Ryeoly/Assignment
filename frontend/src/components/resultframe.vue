@@ -50,10 +50,10 @@
           </thead>
           <tbody style="text-align:center">
           <tr>
-            <td>학부</td>
-            <td class="border">{{major[db_result.db_user[0].pmajor]}}</td>
-            <td class="border">{{db_result.db_user[0].pid}}</td>
-            <td class="border">{{db_result.db_user[0].name}}</td>
+            <td class="border">학부</td>
+            <td class="border">{{major[this.db_user[0].pmajor]}}</td>
+            <td class="border">{{this.db_user[0].pid}}</td>
+            <td class="border">{{this.db_user[0].name}}</td>
           </tr>
           </tbody>
         </table>
@@ -78,13 +78,13 @@
           </thead>
           <tbody style="text-align:center">
           <tr>
-            <td class="border">{{db_result.jeongong[0].first * 3}}</td>
-            <td class="border">{{db_result.gyoyang[0].first * 3 }}</td>
-            <td class="border">{{db_result.jeongong[0].first * 3 + db_result.gyoyang[0].first*3}}</td>
-            <td class="border">{{db_result.jeongong[0].second*3}}</td>
-            <td class="border">{{db_result.gyoyang[0].second*3}}</td>
-            <td class="border">{{db_result.jeongong[0].second*3 + db_result.gyoyang[0].second*3}} </td>
-            <td class="border">{{db_result.sungjeok[0].avofav.toPrecision(3)}}</td>
+            <td class="border">{{this.jeongong[0].first}}</td>
+            <td class="border">{{this.gyoyang[0].first}}</td>
+            <td class="border">{{this.jeongong[0].first + this.gyoyang[0].first}}</td>
+            <td class="border">{{this.jeongong[0].second}}</td>
+            <td class="border">{{this.gyoyang[0].second}}</td>
+            <td class="border">{{this.jeongong[0].second + db_result.gyoyang[0].second}} </td>
+            <td class="border">{{this.totalaverage.toPrecision(3)}}</td>
           </tr>
           </tbody>
         </table>
@@ -104,12 +104,12 @@
           </tr>
           </thead>
           <tbody style="text-align:center" id="delbody">
-            <tr  v-for="item in db_result.db_score">
+            <tr v-for="item in db_score">
                 <td class="border">{{item.snum}}</td>
                 <td class="border">{{item.sname}}</td>
-                <td class="border">{{major[item.snum.split('-')[1]]}}</td>
+                <td class="border">{{major[item.snum.split('-')[2]]}}</td>
                 <td class="border">{{classify[item.snum.split('-')[0]]}}</td>
-                <td class="border">3</td>
+                <td class="border">{{item.hakjum}}</td>
                 <td class="border">{{item.grade}}</td>
             </tr>
           </tbody>
@@ -138,9 +138,38 @@ export default {
       if (this.db_result.janghak.length !==0){
         this.janghaksang = this.db_result.janghak;        //장학생이 존재하는 경우에 값을 넣기.
       }
+      if (this.db_result.db_score.length !==0){
+        this.db_score = this.db_result.db_score;        //장학생이 존재하는 경우에 값을 넣기.
+      }
       if(this.db_result.semester.length!==0){
-        for(var i=0; i<this.db_result.semester.length; i++)
-        this.chartData.push([this.db_result.semester[i], Number(this.db_result.chartav[i])]);     //차트 만들기
+        for(var i=(this.db_result.semester.length)-1; i>=0; i--)
+          this.chartData.push([this.db_result.semester[i], Number(this.db_result.chartav[i])]);     //차트 만들기
+      }
+      else{
+        this.chartData.push([' ',0]);
+      }
+
+      if (this.db_result.db_user.length !==0){
+        this.db_user = this.db_result.db_user;
+      }
+
+      if (this.db_result.sungjeok.length !==0){
+        this.sungjeok = this.db_result.sungjeok;
+        var nanugi = 0;
+        for(var j=0; j<this.sungjeok.length; j++){
+          this.totalaverage += this.sungjeok[j].avofav;
+          nanugi += this.sungjeok[j].hakjum;
+        }
+        if(nanugi ===0 )
+          nanugi = 1;
+        this.totalaverage /= nanugi;
+      }
+
+      if (this.db_result.jeongong.length !==0){
+        this.jeongong = this.db_result.jeongong;
+      }
+      if (this.db_result.gyoyang.length !==0){
+        this.gyoyang = this.db_result.gyoyang;
       }
       console.log(this.db_result);
     })
@@ -157,31 +186,39 @@ export default {
   },
   data() {
     return {
-      //메뉴 리스트 상태바 페이지마다 가져가야 될것
-      menu_list: [
-        {link: '/', title: 'MAIN'},
-        {link: '/func1', title: 'FUNC1'},
-        {link: '/func2', title: 'FUNC2'},
-        {link: '/func3', title: 'FUNC3'}
-      ],
+
       //여기까지 상태바////////
-      user: '2016722001',
+      user: '2018722007',
       db_result: [],
+      sungjeok: [{avofav: 0, semester:'20-2', chartav:0, hakjum:0}],
+      db_user: [{pmajor:'null', pid:'null', pname:'null'}],
+      jeongong: [{first:0, second:0}],
+      gyoyang: [{first:0, second:0}],
+      totalaverage:0,
       major:{
-        '': '장학생이 존재하지 않습니다',
+        '': ' ',
         722: '컴퓨터정보공학부',
-        622: '소프트웨어정보공학부',
-        522: '정보공학부'
+        700: '소프트웨어학과',
+        500: '전자공학과',
+        100: '국어국문학과',
+        400: '영어영문학과',
+        999: '전체공통'
+
       },
       classify:{
         0: '전공',
         1: '교양'
       },
-      recent_selected:'1-1',  //현재 semester로 바꿔줘야함.
-      selected: '1-1',
+      db_score:[{snum:' ',semester:null,grade:null,sname:null,hakjum:null}],
+      recent_selected:'20-2',  //현재 semester로 바꿔줘야함.
+      selected: '20-2',
       options: [
-        { value: '1-2', text: '1-2' },
-        { value: '1-1', text: '1-1' }
+        { value: '20-2', text: '20-2' },
+        { value: '20-1', text: '20-1' },
+        { value: '19-2', text: '19-2' },
+        { value: '19-1', text: '19-1' },
+        { value: '18-2', text: '18-2' },
+        { value: '18-1', text: '18-1' }
       ],
       janghaksang : [{name:'', pmajor : ''}],
       time : 0,
@@ -194,7 +231,7 @@ export default {
         },
         vAxis: {
           viewWindow: {
-            max: 5,
+            max: 4.5,
             min: 0
           }
         }
@@ -207,6 +244,9 @@ export default {
       console.log("selected="+this.selected);
       this.$http.post('/resultperson', {user: this.user, semester: this.selected, recent: this.recent_selected}).then((response) => {
         this.db_result = response.data;
+        if (this.db_result.db_score.length !==0){
+          this.db_score = this.db_result.db_score;
+        }
         console.log(this.db_result);
       })
     }
