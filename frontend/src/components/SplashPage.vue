@@ -1,6 +1,6 @@
 <template>
   <div class="splashscreen-wrapper">
-    <div class="logo-letters-group">
+    <div class="letters-group">
       <transition-group name="letters"
                         @after-enter="afterEnter"
                         @before-enter="beforeEnter"
@@ -22,12 +22,28 @@ export default {
   methods: {
     beforeEnter: function(el) {
       el.style.transitionDelay = parseInt(el.dataset.index, 10) * 100 + 'ms'
-      console.log(el.dataset.index)
     },
     afterEnter: function (el) {
       if(parseInt(el.dataset.index, 10) === 8) {
-        this.$router.push('/login')
+        this.$http.get("http://localhost:3000/api/login").then((res) => {
+            const user = res.data.user;
+            if (user) {
+              this.$store.commit("setUser", user);
+              this.$router.push('/main');
+            }
+            else {
+              this.$router.push('/login');
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+          });
       }
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.getters.user;
     }
   }
 }
@@ -40,28 +56,16 @@ export default {
   height: 100%;
   width: 100%;
 
-  .logo-wrapper {
-    height: 30vh;
-    width: 30vw;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -15vw;
-    margin-top: -15vh;
-    animation: image 1s ease-in-out 2s 1 normal forwards;
-    box-sizing: border-box;
-  }
-
-  .logo-letters-group {
+  .letters-group {
     height: 10vh;
     letter-spacing: 3px;
-    font-size: 1.5vw;
+    font-size: 2.5vw;
     font-weight: 700;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: 20vh;
-    margin-left: -50vw;
+    margin-top: 23vw;
+    margin-left: -8vw;
     width: 100vw;
   }
 }

@@ -1,18 +1,18 @@
 <template>
-  <div class="wrapper">
+  <div class="login_full_wrapper">
     <div class="parent">
       <div class="inner_wrapper"> </div>
       <div class="header"> </div>
       <div class="welcome_msg_wrapper"> </div>
       <div class="footer"> </div>
-      <div class="header_logo"> <p>header_logo</p> </div>
-      <div class="welcome_msg"> <p>welcome_msg</p> </div>
+      <div class="header_logo"></div>
+      <div class="welcome_msg">2020 DBMS<br>Bluemango Team Project</div>
       <div class="copyright"> <p>copyright</p> </div>
       <div class="link"> <p>link</p> </div>
       <transition-group name="list" tag="div" class="login_wrapper" appear>
         <div v-for="component in components" :class="component" :key="component" v-if="show">
-          <p v-if="component === 'login_img'">login_img</p>
-          <p v-if="component === 'login_msg'">login_msg</p>
+          <div v-if="component === 'login_img'" class="logo_img"></div>
+          <div v-if="component === 'login_msg'" class="login_msg_front"><span class="front">Create new account</span> OR Sign in with these credentials:<div>Username: <span class="bold">10 digit number</span> Password: <span class="bold">secret</span></div></div>
           <b-form-input class="form-control border-0" type="text" size="lg" placeholder="Enter your ID" v-model="pid" v-if="component === 'login_user_id'" :state="pid_check" v-on:keyup="check_pid()" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"></b-form-input>
           <b-form-invalid-feedback id="input-live-feedback">
             {{pid_msg}}
@@ -23,7 +23,7 @@
           </b-form-invalid-feedback>
           <b-button class="login_btn" block variant="info" size="lg" v-on:click="loginEL()" v-if="component === 'login_submit'">Login</b-button>
           <p v-if="component === 'forget_pw'">forget_pw</p>
-          <p v-on:click="joinEL" v-if="component === 'join'">join</p>
+          <div v-on:click="joinEL" v-if="component === 'join'">join</div>
         </div>
       </transition-group>
     </div>
@@ -35,6 +35,28 @@
 
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&display=swap');
+.logo_img {
+  background: url("../assets/kw_logo.png") no-repeat center center;
+  background-size: 100%;
+}
+.login_msg_front {
+  font-family: 'Heebo', sans-serif;
+  font-weight: 400;
+  text-align: center;
+  font-size: 16px;
+  color: #97999b;
+}
+.front {
+  color: #7283df;
+}
+.bold {
+  font-weight: 500;
+}
+
+.logo {
+  width: 100%;
+}
 .sam{
   position:absolute;
   bottom:61%;
@@ -69,7 +91,7 @@
   background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%);
   z-index: 1;
 }
-.wrapper{
+.login_full_wrapper{
   height:100vh;
 }
 
@@ -121,10 +143,17 @@ div {
   z-index: 40;
 }
 .header_logo {
-  grid-area: 2 / 7 / 3 / 10;
+  background: url("../assets/Bluemango_logo.png") no-repeat center center;
+  background-size: 100%;
+  grid-area: 2 / 7 / 4 / 12;
   z-index: 40;
 }
 .welcome_msg {
+  font-family: 'Heebo', sans-serif;
+  text-align: center;
+  font-size: 45px;
+  font-weight: 500;
+  color: white;
   grid-area: 4 / 12 / 7 / 20;
   z-index: 40;
 }
@@ -140,11 +169,14 @@ div {
   z-index: 40;
 }
 .join {
+  font-family: 'Heebo', sans-serif;
+  font-weight: 500;
   grid-area: 18 / 12 / 19 / 14;
   text-align: right;
   z-index: 40;
   color:#ffffff;
-  font-size:20px;
+  font-size:30px;
+
 }
 .copyright {
   grid-area: 29 / 7 / 30 / 12;
@@ -288,18 +320,19 @@ export default {
       }
     },
     loginEL: function () {
-      this.$http.post('http://localhost:3000/api/login', {pid: this.pid, pwd: this.pwd}).then(response => {
-        console.log(response.data.isSuccess);
-        if(response.data.isSuccess) {
-          this.show = false
-          setTimeout(() => {
-            this.$router.push('/main');
-          }, 1000);
-        }
-        else {
-          this.login_success = false;
-        }
-      });
+        this.$http.post("http://localhost:3000/api/login", {pid: this.pid, pwd: this.pwd}, { "Content-Type": "application-json" })
+          .then((res) => {
+            if (res.data.user) {
+              this.$store.commit("setUser", res.data.user);
+              this.$router.push('/main');
+            }
+            else if (!res.data.isSuccess) {
+              this.login_success = false;
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+          });
     },
     nextStep(n) {
       return (n + 1 < colors.length) ? n + 1 : 0

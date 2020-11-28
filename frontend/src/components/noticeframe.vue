@@ -302,6 +302,11 @@ tr.list-head {
   text-align: center;
   background-color: white;
 }
+img {
+  max-width: 100%;
+  height: auto !important;
+  line-height: 0px;
+}
 
 
 

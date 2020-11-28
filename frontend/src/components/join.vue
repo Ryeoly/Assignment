@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="join_full_wrapper">
     <div class="parent">
       <div class="inner_wrapper"></div>
       <div class="header"></div>
@@ -10,9 +10,10 @@
           <b-card bg-variant="light" v-if="component === 'join_inner'">
             <b-form-group
               class="mb-0"
-              label="회원가입"
+              label="Sign Up"
               label-align="center"
               label-size="lg"
+              label-class="pt-2 mb-0"
             >
               <b-form-group v-for="item in Object.keys(user_input)"
                             :label="item"
@@ -70,7 +71,7 @@
       <div class="copyright"></div>
       <div class="link"></div>
       <div class="header_logo"></div>
-      <div class="welcome_msg"></div>
+      <div class="welcome_msg">2020 DBMS<br>Bluemango Team Project</div>
     </div>
     <div class="sam"></div>
     <div class="sagak"></div>
@@ -80,6 +81,10 @@
 
 
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&display=swap');
+.logo {
+  width: 100%;
+}
 .btn-block {
   display: block;
 }
@@ -142,7 +147,7 @@
   z-index: 1;
 }
 
-.wrapper {
+.join_full_wrapper {
   height: 100vh;
 }
 
@@ -197,6 +202,10 @@ div {
   grid-row-gap: 2px;
 }
 
+.card {
+  border-radius: 2% !important;
+}
+
 .join_inner {
   grid-area: 1 / 6 / 20 / 14;
   z-index: 11;
@@ -224,11 +233,18 @@ div {
 }
 
 .header_logo {
-  grid-area: 2 / 7 / 3 / 9;
+  background: url("../assets/Bluemango_logo.png") no-repeat center center;
+  background-size: 100%;
+  grid-area: 2 / 7 / 4 / 12;
   z-index: 11;
 }
 
 .welcome_msg {
+  font-family: 'Heebo', sans-serif;
+  text-align: center;
+  font-size: 45px;
+  font-weight: 500;
+  color: white;
   grid-area: 4 / 12 / 7 / 20;
   z-index: 11;
 }
