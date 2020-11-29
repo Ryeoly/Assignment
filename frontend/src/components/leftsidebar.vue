@@ -1,7 +1,7 @@
 <template>
   <div class="left" style="background-color:white">
 
-    <img src="../assets/Bluemango_logo.jpeg" alt="Logo" title="bluemango">
+    <img src="../assets/Bluemango_logo.png" alt="Logo" title="bluemango">
     <ul class="mylist">
       <li><router-link to="/main">메인</router-link></li>
       <li><router-link to="/enroll">수강 신청</router-link></li>
@@ -76,7 +76,7 @@ export default {
     return {
       apply_list: [],
       friend_list: [],
-      user: '2018722007',
+      user: this.$store.state.user.pid,
       semester: '20-2',
       friend_table: [],
       friend_id:'',
