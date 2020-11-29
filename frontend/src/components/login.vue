@@ -311,7 +311,6 @@ export default {
       if(this.pid.length === 0) this.pid_check = null;
       else if(this.pid.length===10) {
         this.$http.post('http://localhost:3000/api/pid', {pid: this.pid}).then(response => {
-          console.log(response.data.isSuccess);
           if(response.data.isSuccess === false) this.pid_msg = "없는 학번입니다."
           this.pid_check = !!response.data.isSuccess;
         });

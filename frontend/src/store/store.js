@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 
@@ -28,14 +29,12 @@ export const store = new Vuex.Store({
       state.friend_list = friend;
     },
     del_apply(state, pid) {
-      state.apply_list.forEach(one => {
-        if (one.friend_pid === pid) {
-          state.apply_list.remove(one);
-        }
-      });
+      const idx = state.apply_list.findIndex(function(item) {return item.friend_pid === pid})
+      state.apply_list.splice(idx, 1);
     },
-    add_friend(state, pid, name) {
-      state.friend_list.push({name: name, pid : data});
+    add_friend(state, data) {
+      state.friend_list.push({name: data.name, pid : data.pid});
     }
-  }
+  },
+  plugins: [createPersistedState()]
 });

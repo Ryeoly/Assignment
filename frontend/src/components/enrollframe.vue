@@ -1,6 +1,8 @@
 <template>
   <div class="wrapper">
-    <div class="one" style="text-align: right; color:white">2016722021 윤인석</div>
+    <div class="one"></div>
+    <user></user>
+
     <div class="enrollsearch">
       <table class="card-table table">
         <tr>
@@ -99,7 +101,12 @@
 </template>
 
 <script>
+import user from "./userinfo";
+
 export default {
+  components:{
+    user
+  },
   created(){
     this.$http.post('/enrolltable', {pid:this.pid, semes:this.semes}).then((response) =>{     //created() 는 이 페이지 켜지기 전에 실행되는거고//    https://localhost:3000/test backend로 요청을 넣는 거임
       console.log(response.data);

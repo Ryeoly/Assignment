@@ -83,33 +83,22 @@
     data() {
       return {
         friend_id:'',
-        db_result:[],
-        class_list:[{snum:'', sname:'', grid_time:''}],
-        notice_list:[],
         friend_table:[],
-        semester: '20-2'
+        semester: '20-2',
+        class_list: [],
+        notice_list: []
       }
     },
-
-
-    methods: {
-      db_init: function() {
-        this.$http.post('/maintable', {user: this.user, semes:this.semester}).then((response) => {
-          this.db_result = response.data;
-          console.log(this.db_result);
-          if(this.db_result.rows2.length!==0)
-            this.class_list = this.db_result.rows2;
-
-          if(this.db_result.notice.length!==0)
-            this.notice_list = this.db_result.notice;
-        })
-      },
-      calltable: function(f_pid){
-        this.$http.post('/maintable/calltable', {friend_pid : f_pid, semes: this.semester}).then((response) => {
-          this.friend_table = response.data;
-        });
-      },
-
+    computed: {
+      user: function () {
+        return parseInt(this.$store.state.user.pid);
+      }
+    },
+    created() {
+      this.$http.post('/maintable/main', {user: this.user, semes: this.semester}).then((response) => {
+        this.class_list = response.data.rows2;
+        this.notice_list = response.data.notice;
+      })
     }
   }
 </script>

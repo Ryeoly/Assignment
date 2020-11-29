@@ -205,7 +205,7 @@ export default {
   },
   methods: {
     logout: function () {
-      this.$http.get("http://localhost:3000/api/logout").then((res) => {
+      this.$http.get("/api/logout").then((res) => {
         if (res.data.isSuccess) {
           this.$router.push('/login');
         }
@@ -233,7 +233,7 @@ export default {
       this.state_list.tel = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(this.info.tel);
     },
     resetform: function () {
-      this.$http.post("http://localhost:3000/api/userinfo", {pid: this.$store.state.user.pid}).then((res) => {
+      this.$http.post("/api/userinfo", {pid: this.$store.state.user.pid}).then((res) => {
         // this.$http.post("http://localhost:3000/api/userinfo", {pid: '2016722001'}).then((res) => {
         if (res.data.isSuccess) {
           this.info = res.data.info;
@@ -266,7 +266,7 @@ export default {
         return
       }
       if (this.new_pwd !== '') this.info.pwd = this.new_pwd;
-      this.$http.post("http://localhost:3000/api/update", {info: this.info}).then((res) => {
+      this.$http.post("/api/update", {info: this.info}).then((res) => {
         if (res.data.success) {
           this.$store.commit("updatePW", this.info.pwd);
           this.$nextTick(() => {
@@ -292,7 +292,7 @@ export default {
     }
   },
   created: async function () {
-    this.$http.get("http://localhost:3000/api/login").then((res) => {
+    this.$http.get("/api/login").then((res) => {
       const user = res.data.user;
       if (user) {
         this.$store.commit("setUser", user);
