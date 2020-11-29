@@ -116,7 +116,7 @@ router.post('/reject', function(req, res, next) {
 
 router.post('/calltable', function (req, res, next) {
     var query = connection.query(
-        'select sub.* from score as sc, subject as sub where sc.pid = ? and sc.snum=sub.snum and sub.semester=?', [req.body.friend_pid, req.body.semes],
+        'select sub.* from score as sc, subject as sub where sc.pid = ? and sc.snum=sub.snum and sc.semester=?', [req.body.friend_pid, req.body.semes],
         function (err, friend_table) {
             if (err) console.log(err)
             res.json(friend_table)

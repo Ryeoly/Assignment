@@ -250,6 +250,7 @@ div {
 </style>
 
 <script>
+
 const colors = [
   {
     start: [41, 121, 255], stop: [130, 94, 228]
@@ -262,6 +263,7 @@ const colors = [
 export default {
   data() {
     return {
+      showsidebar: false,
       colors, // colors array
       step: 0,
       currIdx: 0,

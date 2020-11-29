@@ -1,28 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="one" style="text-align: right; color:white">2016722021 윤인석</div>
-    <div class="four" style="background-color:white">
-      <img src="../assets/Bluemango_logo.jpeg" alt="Logo" title="bluemango">
-      <ul class="mylist">
-        <li>
-          <router-link to="/main">메인</router-link>
-        </li>
-        <li>
-          <router-link to="/enroll">수강 신청</router-link>
-        </li>
-        <li>
-          <router-link to="/notice">공지 사항</router-link>
-        </li>
-        <li>
-          <router-link to="/result">학습 결과</router-link>
-        </li>
-      </ul>
-      <li class="menu" v-for='list in menu_list'>
-        <router-link :to='list.link'> {{ list.title }}</router-link>
-      </li>
-      <hr color="gray" size="3px" width="80%">
-
-    </div>
+    <left></left>
 
     <div class = "uptown">
       <b-card>
@@ -83,7 +62,7 @@
             <td class="border">{{this.jeongong[0].first + this.gyoyang[0].first}}</td>
             <td class="border">{{this.jeongong[0].second}}</td>
             <td class="border">{{this.gyoyang[0].second}}</td>
-            <td class="border">{{this.jeongong[0].second + db_result.gyoyang[0].second}} </td>
+            <td class="border">{{this.jeongong[0].second + this.gyoyang[0].second}} </td>
             <td class="border">{{this.totalaverage.toPrecision(3)}}</td>
           </tr>
           </tbody>
@@ -130,8 +109,12 @@
 </template>
 
 <script>
+import Left from './leftsidebar.vue'
 
 export default {
+  components:{
+    Left
+  },
   created() {
     this.$http.post('/resultperson', {user: this.user, semester: this.selected, recent: this.recent_selected}).then((response) => {
       this.db_result = response.data;
@@ -186,7 +169,6 @@ export default {
   },
   data() {
     return {
-
       //여기까지 상태바////////
       user: '2018722007',
       db_result: [],
