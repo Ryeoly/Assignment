@@ -41,10 +41,32 @@
   grid-column: 53 / 75;
   grid-row: 23 / 54;
   border-radius: 5px 5px 5px 5px;
-  background-color: #5758bb;
+  background-color: #7abaff;
   box-shadow: 0px 2px 0px lightgray;
+  margin-bottom: 0;
 }
-
+.two .border2{
+  margin-left: 15%;
+}
+.two .border3{
+  margin-right: 20%;
+}
+.two .border4{
+  border-left-color: #5758bb;
+  border-left: 3px;
+}
+.two thead p{
+  margin-left: 15%;
+  font-weight: bolder;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+.two thead, .two td{
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  border-bottom: 1px #6c757d;
+}
 .three {
   display: grid;
   grid-template-columns: repeat(37, 1fr);
@@ -57,17 +79,18 @@
 }
 
 .left {
-  grid-column: 1/11;
+  grid-coluimmn: 1/11;
   grid-row: 1/100;
   background-color: #5758bb;
   box-shadow: 2px 2px 2px lightgray;
 }
 
 .five{
+  margin-top: 30%;
+  margin-bottom: 10%;
   grid-column: 53 / 75;
   grid-row: 58 /86;
   border-radius: 5px 5px 5px 5px;
-  background-color: #5758bb;
   box-shadow: 0px 2px 0px lightgray;
 }
 .five .notice-pretty{
@@ -78,6 +101,15 @@
 .five .notice-pretty2{
   font-weight: 500 !important;
   font-size: 2rem;
+}
+.five border3{
+  border-bottom: #825ee4;
+}
+.five ul{
+  list-style: none;
+}
+.five li{
+  float: left;
 }
 li.menu {
   width: 100%;

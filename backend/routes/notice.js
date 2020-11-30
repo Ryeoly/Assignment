@@ -21,7 +21,7 @@ router.post('/', function (req, res, next) {
                 function (err, prof_inform) {
                     if (err) console.log(err)
                     var query2 = connection.query(
-                        'select subject.* from score,subject where subject.snum=score.snum and score.pid=? and subject.semester=?',
+                        'select subject.* from score,subject where subject.snum=score.snum and score.pid=? and score.semester=?',
                         [req.body.user, req.body.semester],
                         function (err, subject_list) {
                             if (err) console.log(err)

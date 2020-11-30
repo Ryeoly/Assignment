@@ -1,13 +1,12 @@
 <template>
   <div class="wrapper">
+    <left></left>           <!-- 여기가 left바-------------------------------------------------------------------------------------- -->
+    <user></user>
     <div class="notice" style="background-color: white">
-
       <p style="font-size: 24px;" >강의 공지사항</p>
-
-
-      <table class="n-list">
+      <table class="table table-hover">
         <thead>
-        <tr class="list-head">
+        <tr class="list-head" style="color: white">
           <th>번호</th>
           <th>제목</th>
           <th>파일</th>
@@ -39,47 +38,52 @@
     </div>
 
 
-
     <div class="searchbox">
+      <font-awesome-icon class = "icon" ria-hidden="true" icon="search"/>
+      <b-form-input v-model="Title" placeholder="제목을 입력하세요"></b-form-input>
+      <b-button v-on:click="search">검색</b-button>
+    </div>
+    <div class="select-subject">
       <b-dropdown text="강의 목록" class="m-md-2">
         <b-dropdown-item v-for='list in this.subject_list'>
           <router-link  v-bind:to="{name: 'notice', params: {snum: list.snum}}">{{ list.sname }}</router-link>
         </b-dropdown-item>
       </b-dropdown>
-
-      <font-awesome-icon class = "icon" ria-hidden="true" icon="search"/>
-      <b-form-input v-model="Title" placeholder="제목을 입력하세요"></b-form-input>
-      <b-button v-on:click="search">검색</b-button>
     </div>
     <div class="professor-info">
-      <table class="card-table table">
-        <thead class="thead-light" style="text-align:center">
-        <tr>
-          <th scope="col" colspan="1" class="border">교수님 이름</th>
-          <th scope="col" colspan="1" class="border">교수님 전화번호</th>
-          <th scope="col" colspan="1" class="border">교수님 이메일</th>
-        </tr>
-        </thead>
+      <p style="color: #825ee4; font-weight: bolder; text-align: center; margin-bottom: 5%; font-size: large">담당 교수님</p>
+      <img src="../assets/professor.png" class="professor-img" alt="picture" title="prof" style="margin-bottom: 5%">
+      <table class="card-table table" style="text-align: center">
         <tbody style="text-align:center">
         <tr>
-        <tr>
+          <th scope="col" colspan="1" class="border">성함</th>
           <td class="border">{{ this.prof_result[0].name}}</td>
+        </tr>
+        <tr>
+          <th scope="col" colspan="1" class="border" style="font-size: small">전화번호</th>
           <td class="border">{{ this.prof_result[0].tel}}</td>
+        </tr>
+        <tr>
+          <th scope="col" colspan="1" class="border">이메일</th>
           <td class="border">{{this.prof_result[0].email}}</td>
         </tr>
         </tbody>
       </table>
     </div>
-    <img src="../assets/professor.png" class="professor-img" alt="picture" title="prof">
   </div>
 </template>
 
 
 
 <script>
-
+import Left from "./leftsidebar";
+import user from "./userinfo";
 export default {
   name: 'notice',
+  components:{
+    Left,
+    user
+  },
   created(){
     console.log('snum: '+this.snum);
     this.$http.post('/notice',{snum: this.snum, user: this.user, semester : this.semester }).then((response) =>{
@@ -100,8 +104,8 @@ export default {
   },
   data(){
     return {
-      user:'2016722001',      //기홍이형이 보내줄거
-      semester:'1-1',         //이거갖고있어야되는 현재 학기
+      user:'2018722007',      //기홍이형이 보내줄거
+      semester:'20-2',         //이거갖고있어야되는 현재 학기
       db_result: [],
       subject_list:[],
       prof_result: [{name:'',tel:'',email:''}],
@@ -160,7 +164,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 @import '../style/basicstyle.scss';
 
 .wrapper {
@@ -199,12 +203,13 @@ export default {
   padding: 0 1rem;
 }
 .select-subject {
-  grid-column: 46 / 53;
-  grid-row: 26 / 30;
+  grid-column: 45 / 52;
+  grid-row: 25 / 29;
   background-color: white;
+  margin-top: 0;
 }
 .searchbox {
-  grid-column: 54 / 65;
+  grid-column: 52 / 63;
   grid-row: 26 / 30;
   background-color: white;
   width: 200px;
@@ -246,43 +251,15 @@ export default {
 }
 .professor-info {
   grid-column: 66 / 77;
-  grid-row: 25 / 70;
+  grid-row: 35 / 80;
   background-color: white;
   border-radius: 5px 5px 5px 5px;
+  text-align: center;
 }
 .professor-img {
-  grid-column: 69/74;
-  grid-row: 19/26;
   width: 100%;
   height: 100%;
   border-radius: 50%;
-}
-p.click-list {
-  text-align: right;
-}
-table.n-list {
-  margin-left: 0px;
-  margin-right: 0px;
-  margin-top: 40px;
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0px;
-  text-align: left;
-  line-height: 1.5;
-  border-top: 1px solid #ccc;
-}
-table.n-list th {
-  width: 150px;
-  padding: 10px;
-  font-weight: bold;
-  vertical-align: top;
-  border-bottom: 1px solid #ccc;
-}
-table.n-list td {
-  width: 350px;
-  padding: 10px;
-  vertical-align: top;
-  border-bottom: 1px solid #ccc;
 }
 tr.list-head {
   background : #5e72e4;
@@ -290,8 +267,6 @@ tr.list-head {
   font-family: 새굴림,serif;
   color: darkgrey;
 }
-
-
 .friend-list2 li {
   width: 100%;
   list-style: none;
@@ -303,9 +278,10 @@ tr.list-head {
   background-color: white;
 }
 img {
-  max-width: 100%;
+  max-width: 80%;
   height: auto !important;
   line-height: 0px;
+
 }
 
 

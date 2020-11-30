@@ -3,32 +3,33 @@
 
     <div class="one"></div>
 
-    <div class="five" style="background-color: #686868">
-      <table class="card-table table" style="color: white">
-        <thead class="thead-light" style="text-align:center">
-        <p class="notice-pretty">과목별
-          <span class="notice-pretty2">NOTICE</span>
-        </p>
-        </thead>
-        <tbody style="text-align:center">
-        <tr  v-for="item in notice_list" :key="item">
-          <td class="border">{{$moment(item.date).format('MM/DD')}}</td>
-          <td class="border">{{item.sname}}</td>
-          <td class="border">{{item.title}}</td>
-        </tr>
-        </tbody>
-      </table>
+    <div class="five" style=" display: table; background-color: lightgrey; position: relative">
+      <p class="notice-pretty" style="margin-left: 10%; font-weight: bold; border-bottom: #825ee4; border-bottom: 1px">과목별
+        <span class="notice-pretty2" style="color: #825ee4">NOTICE</span>
+      </p>
+      <ul class="latest-notice" v-for="item in notice_list" :key="item" style="margin-left: 10%">
+        <li class="border3" style="border: none; width: 100%">
+          <span style="font-weight: bold; margin-left: -20%">{{$moment(item.date).format('MM/DD')}}</span>
+          <span style="margin-left: 5%; font-weight: bold">{{item.sname}}</span>
+          <span style="margin-left: 5%; font-weight: bold">{{item.title}}</span>
+        </li>
+      </ul>
     </div>
 
-    <div class="two" style="background-color: midnightblue">
-      <table class="card-table table" style="color: white">
-        <thead class="thead-light" style="text-align:center">
-        <p> 수강 과목 </p>
+    <div class="two" style="display: table; background-color: #5758bb">
+      <table class="subject-table table" style="color: #cce5ff" >
+        <thead class="thead-light" style="text-align: left; height: 10px">
+        <p style="font-weight: bolder; font-size: large; width: 100%">
+          <span style="font-size: x-large; font-weight: bolder; margin-right: 8%; color: #cce5ff">
+            2020학년도 2학기
+          </span>
+          수강 과목
+        </p>
         </thead>
-        <tbody style="text-align:center">
-        <tr  v-for="item in class_list" :key="item">
-          <td class="border">{{ item.sname}}</td>
-          <td class="border"><router-link v-bind:to="{name: 'notice', params: {snum: item.snum}}">공지사항</router-link></td>
+        <tbody style="text-align:left">
+        <tr  v-for="(item, index) in class_list" :key="item">
+          <td class="border4"><span style="font-weight: bold; color: darkgrey">{{index+1}}.</span>  {{ item.sname}} ({{ item.stime}})</td>
+          <td class="border5"><router-link  style="font-size: large" v-bind:to="{name: 'notice', params: {snum: item.snum}}">공지사항</router-link></td>
         </tr>
         </tbody>
       </table>
@@ -89,7 +90,7 @@
         friend_id:'',
         friend_table:[],
         semester: '20-2',
-        class_list: [],
+        class_list: [{snum:'', sname:'', grid_time:''}],
         notice_list: []
       }
     },
