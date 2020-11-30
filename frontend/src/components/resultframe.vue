@@ -4,7 +4,7 @@
     <left></left>
     <user></user>
     <div class = "uptown">
-      <b-card>
+      <b-card class="up-card">
         <h4 class="card-title">학과별 수석 장학생</h4>
         <table class="card-table table">
           <tr>
@@ -236,6 +236,9 @@ export default {
         if (this.db_result.db_score.length !==0){
           this.db_score = this.db_result.db_score;
         }
+        else{
+          this.db_score = [{snum:' ',semester:null, grade:null, sname:null, hakjum:null}];
+        }
         console.log(this.db_result);
       })
     }
@@ -254,13 +257,14 @@ export default {
   grid-row: 23/100;
   max-width: 100%;
   height: auto !important;
-  overflow: scroll;
+  overflow: auto;
 }
 .forselect{
   width:10%;
   float:right;
 }
-.card{
+.up-card{
   height:100%;
 }
+
 </style>
