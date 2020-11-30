@@ -6,6 +6,7 @@
       <li><router-link to="/main">메인</router-link></li>
       <li><router-link to="/enroll">수강 신청</router-link></li>
       <li><router-link to="/result">학습 결과</router-link></li>
+      <li><router-link to="/ranking">석차 조회</router-link></li>
       <li @click="$bvToast.show('example-toast')">친구 신청 목록</li>
     </ul>
     <b-toast id="example-toast" title="친구 신청 목록" static no-auto-hide>

@@ -4,10 +4,12 @@ import mainframe from '@/components/mainframe'
 import noticeframe from '@/components/noticeframe'
 import enrollframe from '@/components/enrollframe'
 import resultframe from '@/components/resultframe'
+import rankingframe from "@/components/rankingframe";
 import Login from '@/components/login'
 import SplashPage from "@/components/SplashPage";
 import Join from "@/components/join";
 import view from "@/components/view-detail";
+
 Vue.use(Router)
 
 export default new Router({
@@ -41,6 +43,10 @@ export default new Router({
     {
       path: '/enroll',
       component: enrollframe
+    },
+    {
+      path: '/ranking',
+      component: rankingframe
     },
     {
       path: '/viewdetail/:index',

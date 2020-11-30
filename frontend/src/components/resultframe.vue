@@ -82,7 +82,7 @@
             <th scope="col" class="border">성적</th>
           </tr>
           </thead>
-          <tbody style="text-align:center" id="delbody">
+          <tbody style="text-align:center">
             <tr v-for="item in db_score">
                 <td class="border">{{item.snum}}</td>
                 <td class="border">{{item.sname}}</td>
@@ -126,7 +126,8 @@ export default {
       }
       if(this.db_result.semester.length!==0){
         for(var i=(this.db_result.semester.length)-1; i>=0; i--)
-          this.chartData.push([this.db_result.semester[i], Number(this.db_result.chartav[i])]);     //차트 만들기
+          if(this.db_result.semester[i]!=='21-1')
+            this.chartData.push([this.db_result.semester[i], Number(this.db_result.chartav[i])]);     //차트 만들기
       }
       else{
         this.chartData.push([' ',0]);

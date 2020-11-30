@@ -21,6 +21,7 @@ var mainRouter = require('./routes/maintable');
 var apiRouter = require('./routes/api')
 var noticeRouter = require('./routes/notice');
 var viewRouter = require('./routes/viewdetail');
+var rankingRouter = require('./routes/ranking');
 
 var app = express();
 
@@ -67,6 +68,7 @@ app.use('/notice/search',noticeRouter);
 app.use('/viewdetail', viewRouter);
 app.use('/viewdetail/lookup', viewRouter);
 app.use('/viewdetail/input', viewRouter);
+app.use('/ranking', rankingRouter);
 
 
 // catch 404 and forward to error handler
