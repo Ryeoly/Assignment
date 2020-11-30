@@ -1,5 +1,7 @@
 <template>
   <div class="wrapper">
+    <div class="one"></div>
+
     <left></left>           <!-- 여기가 left바-------------------------------------------------------------------------------------- -->
     <user></user>
     <div class="notice" style="background-color: white">
@@ -104,7 +106,6 @@ export default {
   },
   data(){
     return {
-      user:'2018722007',      //기홍이형이 보내줄거
       semester:'20-2',         //이거갖고있어야되는 현재 학기
       db_result: [],
       subject_list:[],
@@ -150,6 +151,9 @@ export default {
     }
   },
   computed: {
+    user: function () {
+      return parseInt(this.$store.state.user.pid);
+    },
     pageCount() {
       let listLeng = this.notice_list.length,
         listSize = this.pageSize

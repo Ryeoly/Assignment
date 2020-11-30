@@ -1,13 +1,23 @@
 <template>
   <div class="left" style="background-color:white">
 
-    <img src="../assets/Bluemango_logo.png" alt="Logo" title="bluemango" style="width: 100%">
+    <img src="../assets/Bluemango_logo.png" alt="Logo" title="bluemango" style="margin-top: 5%; margin-left:15%; margin-bottom:10%; width: 70%">
     <ul class="mylist">
-      <li><router-link to="/main">메인</router-link></li>
-      <li><router-link to="/enroll">수강 신청</router-link></li>
-      <li><router-link to="/result">학습 결과</router-link></li>
-      <li><router-link to="/ranking">석차 조회</router-link></li>
-      <li @click="$bvToast.show('example-toast')">친구 신청 목록</li>
+      <li><router-link to="/main">
+        <b-icon icon="house-door-fill" style = "color: #7952b3;"></b-icon>&nbsp;&nbsp;&nbsp;메인
+      </router-link></li>
+      <li><router-link to="/enroll">
+        <b-icon icon="bookmark-check-fill" style = "color: #4BA0B5"></b-icon>&nbsp;&nbsp;&nbsp;수강 신청
+      </router-link></li>
+      <li><router-link to="/result">
+        <b-icon icon="book-fill" style = "color: #EA3323"></b-icon>&nbsp;&nbsp;&nbsp;학습 결과
+      </router-link></li>
+      <li><router-link to="/ranking">
+        <b-icon icon="award-fill" style = "color: #F3C955"></b-icon>&nbsp;&nbsp;&nbsp;석차 조회
+      </router-link></li>
+      <li @click="$bvToast.show('example-toast')" style="color:#808080">
+        <b-icon icon="card-list" style = "color: #C3EEB7"></b-icon>&nbsp;&nbsp;&nbsp;친구 신청 목록
+      </li>
     </ul>
     <b-toast id="example-toast" title="친구 신청 목록" static no-auto-hide>
       <table class="card-table table">
@@ -38,14 +48,16 @@
 
 
     <hr color="gray" size="3px" width="80%">
-    <b-form-input v-model="friend_id" placeholder="Enter Friend_id"></b-form-input>
-    <button v-on:click="add_friend" class=”btn-sm“>친구 신청</button>
+    <br>
+
+    <b-form-input  v-model="friend_id" placeholder="Enter Friend_id" style="width:53%; margin-left:5%;margin-right:5%; display:inline-block; height:4%"></b-form-input>
+    <b-button variant="outline-info" v-on:click="add_friend" style="width:30%; font-size:small; font-weight :bold; height:4%;">
+      신청 <b-icon icon="search" aria-hidden="true"></b-icon>
+    </b-button>
 
 
 
-
-    <hr color="gray" size="3px" width="80%">
-    <b-dropdown text="친구 목록" class="m-md-2">
+    <b-dropdown variant="outline-primary" text="친구 목록"  style="margin-left:5%; margin-top:10%; width:90%;  " >
       <b-dropdown-item v-for='list in $store.state.friend_list' @click="$bvToast.show('friendtable-toast')" v-on:click="calltable(list.pid)">
         {{list.pid + ' - ' + list.name}}
       </b-dropdown-item>
@@ -88,74 +100,74 @@
 </template>
 
 <script>
-  export default {
-    beforeMount() {
-      this.db_init();
+export default {
+  beforeMount() {
+    this.db_init();
+  },
+  data() {
+    return {
+      semester: '20-2',
+      friend_table: [],
+      friend_id:''
+    }
+  },
+  computed: {
+    user: function () {
+      return parseInt(this.$store.state.user.pid);
+    }
+  },
+  methods: {
+    db_init: function() {
+      this.$http.post('/maintable', {user: this.user, semes:this.semester}).then((response) => {
+        let db_result = response.data;
+        console.log(db_result);
+        this.$store.commit("set_friend", db_result.friend_list);
+        this.$store.commit("set_apply", db_result.apply_list);
+      })
     },
-    data() {
-      return {
-        semester: '20-2',
-        friend_table: [],
-        friend_id:''
-      }
+    add_friend: function(){
+      this.$http.post('/maintable/add_friend', {user: this.user, friend: this.friend_id}).then((response) => {
+        if(response.data.result[0]==='error'){
+          alert('친구 신청 실패(존재하지 않는 pid)');
+        }
+        else if(response.data.result[0]==='success'){
+          alert('친구 신청 성공');
+        }
+        else if(response.data.result[0]==='already'){
+          alert('이미 친구 입니다.');
+        }
+        else if(response.data.result[0]==='already_apply'){
+          alert('이미 친구 신청 했습니다.');
+        }
+        else if(response.data.result[0]==='same'){
+          alert('자기 자신은 친구로 할 수 없습니다');
+        }
+      });
     },
-    computed: {
-      user: function () {
-        return parseInt(this.$store.state.user.pid);
-      }
+    accept_friend: function (data, name) {
+      console.log(name);
+      this.$store.commit("del_apply", data);
+      this.$http.post('/maintable/accept', {friend_pid: data, user: this.user}).then((response) => {
+        if(response.data.result[0]==='error') {
+          alert('친구 수락 실패');
+        }
+        else{
+          alert('친구 수락 성공');
+          this.$store.commit("add_friend", {pid: data, name: name});
+          console.log("friend_list"+ this.friend_list);
+        }
+      })
     },
-    methods: {
-      db_init: function() {
-        this.$http.post('/maintable', {user: this.user, semes:this.semester}).then((response) => {
-          let db_result = response.data;
-          console.log(db_result);
-          this.$store.commit("set_friend", db_result.friend_list);
-          this.$store.commit("set_apply", db_result.apply_list);
-        })
-      },
-      add_friend: function(){
-        this.$http.post('/maintable/add_friend', {user: this.user, friend: this.friend_id}).then((response) => {
-          if(response.data.result[0]==='error'){
-            alert('친구 신청 실패(존재하지 않는 pid)');
-          }
-          else if(response.data.result[0]==='success'){
-            alert('친구 신청 성공');
-          }
-          else if(response.data.result[0]==='already'){
-            alert('이미 친구 입니다.');
-          }
-          else if(response.data.result[0]==='already_apply'){
-            alert('이미 친구 신청 했습니다.');
-          }
-          else if(response.data.result[0]==='same'){
-            alert('자기 자신은 친구로 할 수 없습니다');
-          }
-        });
-      },
-      accept_friend: function (data, name) {
-        console.log(name);
-        this.$store.commit("del_apply", data);
-        this.$http.post('/maintable/accept', {friend_pid: data, user: this.user}).then((response) => {
-          if(response.data.result[0]==='error') {
-            alert('친구 수락 실패');
-          }
-          else{
-            alert('친구 수락 성공');
-            this.$store.commit("add_friend", {pid: data, name: name});
-            console.log("friend_list"+ this.friend_list);
-          }
-        })
-      },
-      reject_friend: function (data) {
-        this.$http.post('/maintable/reject', {friend_pid: data, user: this.user});
-        this.$store.commit("del_apply", data);
-        alert('친구 수락 거절');
-      },
-      calltable: function(f_pid){
-        this.$http.post('/maintable/calltable', {friend_pid : f_pid, semes: this.semester}).then((response) => {
-          this.friend_table = response.data;
-        });
-      }
+    reject_friend: function (data) {
+      this.$http.post('/maintable/reject', {friend_pid: data, user: this.user});
+      this.$store.commit("del_apply", data);
+      alert('친구 수락 거절');
+    },
+    calltable: function(f_pid){
+      this.$http.post('/maintable/calltable', {friend_pid : f_pid, semes: this.semester}).then((response) => {
+        this.friend_table = response.data;
+      });
     }
   }
+}
 </script>

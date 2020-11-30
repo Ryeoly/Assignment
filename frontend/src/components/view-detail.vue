@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <div class="one"></div>
 
     <left></left>           <!-- 여기가 left바-------------------------------------------------------------------------------------- -->
     <user></user>
@@ -58,13 +59,17 @@ export default {
     Left,
     user
   },
+  computed: {
+    user: function () {
+      return parseInt(this.$store.state.user.pid);
+    }
+  },
   data(){
     return{
       db_result: [{title:'', writer:'',content:'', file:'', date:'', hit:'', snum:''}],
       Comment_list: [],
       View_Comment: false,
-      Comment: "",
-      pid: "2020722002" //임시로 둔 댓글을 쓰는 사용자의 pid
+      Comment: ""
     }
   },
   props: {
@@ -87,9 +92,9 @@ export default {
         // 공백 입력시 예외 처리
         return;
       }
-      this.$http.post('/viewdetail/input', {comment: this.Comment, pid: this.pid, index: this.db_result[0].idx}).then((response) => {
+      this.$http.post('/viewdetail/input', {comment: this.Comment, pid: this.user, index: this.db_result[0].idx}).then((response) => {
         console.log("data "+response.data[0]);
-        this.Comment_list.push({pid: this.pid , comment: response.data[0].comment, date: response.data[0].date, name: response.data[0].name});
+        this.Comment_list.push({pid: this.user , comment: response.data[0].comment, date: response.data[0].date, name: response.data[0].name});
       })
       this.Comment = "";
     },

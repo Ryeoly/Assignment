@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
-    <div class="one" style="text-align: right; color:white">2016722021 윤인석</div>
+    <div class="one"></div>
     <left></left>
-
+    <user></user>
     <div class = "uptown">
       <b-card>
         <h4 class="card-title">학과별 수석 장학생</h4>
@@ -110,10 +110,12 @@
 
 <script>
 import Left from './leftsidebar.vue'
+import user from "./userinfo";
 
 export default {
   components:{
-    Left
+    Left,
+    user
   },
   created() {
     this.$http.post('/resultperson', {user: this.user, semester: this.selected, recent: this.recent_selected}).then((response) => {
@@ -168,10 +170,14 @@ export default {
     }.bind(this), 3000);
 
   },
+  computed: {
+    user: function () {
+      return parseInt(this.$store.state.user.pid);
+    }
+  },
   data() {
     return {
       //여기까지 상태바////////
-      user: '2018722007',
       db_result: [],
       sungjeok: [{avofav: 0, semester:'20-2', chartav:0, hakjum:0}],
       db_user: [{pmajor:'null', pid:'null', pname:'null'}],
@@ -241,7 +247,7 @@ export default {
 
 .uptown{
   grid-column: 52/75;
-  grid-row: 7/20;
+  grid-row: 9/21;
 }
 .resulttb {
   grid-column: 15/75;
@@ -253,5 +259,8 @@ export default {
 .forselect{
   width:10%;
   float:right;
+}
+.card{
+  height:100%;
 }
 </style>

@@ -10,12 +10,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueGoogleCharts from 'vue-google-charts'
 
-// import { library } from "@fortawesome/fontawesome-svg-core";
-// import {faAngleDown} from "@fortawesome/free-solid-svg-icons";
-// import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-
-// library.add(faAngleDown)
-// Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false
 Vue.config.devtools = true
 Vue.prototype.$http=axios

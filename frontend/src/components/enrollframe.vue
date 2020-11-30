@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="one" style="text-align: right; color:white">2016722021 윤인석</div>
+    <div class="one"></div>
     <left></left>
     <user></user>
     <div class="enrollsearch">

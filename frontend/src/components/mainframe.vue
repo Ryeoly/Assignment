@@ -2,6 +2,11 @@
   <div class="wrapper">
 
     <div class="one"></div>
+    <div class="geul">
+      2020 DataBase Project Bluemango
+    </div>
+
+
     <left></left>           <!-- 여기가 left바-------------------------------------------------------------------------------------- -->
     <user></user>
     <div class="five" style=" display: table; background-color: lightgrey; position: relative">
@@ -143,6 +148,7 @@
 
 <style lang="scss" scoped>
   @import '../style/basicstyle.scss';
+  @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&display=swap');
   /*시간표 테마*/
 
   table.type11 {
@@ -177,6 +183,14 @@
   .timetable th, .timetable td{
     border: 1px solid #f8f9fa;
     text-align: center
+  }
+  .geul {
+    grid-column: 14/51;
+    grid-row: 9 / 21;
+    font-family: 'Heebo', sans-serif;
+    font-size: 42px;
+    font-weight: 400;
+    color: white;
   }
 
 </style>

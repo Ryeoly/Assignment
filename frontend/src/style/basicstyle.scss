@@ -5,13 +5,15 @@
   height: 100vh;
   background-color: #f8f9fa;
 }
+.mylist{
+  padding-inline-start: 12%;
+}
 
 .cover {
   grid-area: 1/1/100/100;
   z-index: 100;
   background-color: #ffffff;
 }
-
 .user {
   grid-area: 3 / 67 / 7 / 75;
   height: 100%;
@@ -34,7 +36,7 @@
   padding-top: 10px;
   padding-right: 5px;
   background-color: #5758bb;
-  box-shadow: 2px 4px 2px lightgray;
+  box-shadow: 2px 4px 2px #F0F1F4;
   font-weight: 500;
 }
 
@@ -43,7 +45,7 @@
   grid-row: 23 / 54;
   border-radius: 5px 5px 5px 5px;
   background-color: #7abaff;
-  box-shadow: 0px 2px 0px lightgray;
+  box-shadow: 0px 2px 0px #F0F1F4;
   margin-bottom: 0;
 }
 .two .border2{
@@ -68,6 +70,7 @@
   border-top: none;
   border-bottom: 1px #6c757d;
 }
+
 .three {
   display: grid;
   grid-template-columns: repeat(37, 1fr);
@@ -76,14 +79,16 @@
   grid-row: 23 / 86;
   border-radius: 5px 5px 5px 5px;
   background-color: #5758bb;
-  box-shadow: 2px 2px 2px lightgray;
+  box-shadow: 2px 2px 2px #F0F1F4;
 }
+
+
 
 .left {
   grid-column: 1/11;
   grid-row: 1/100;
   background-color: #5758bb;
-  box-shadow: 2px 2px 2px lightgray;
+  box-shadow: 2px 2px 2px #F0F1F4;
 }
 
 .five{
@@ -92,7 +97,7 @@
   grid-column: 53 / 75;
   grid-row: 58 /86;
   border-radius: 5px 5px 5px 5px;
-  box-shadow: 0px 2px 0px lightgray;
+  box-shadow: 0px 2px 0px #F0F1F4;
 }
 .five .notice-pretty{
   font-weight: 400 !important;

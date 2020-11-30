@@ -1,7 +1,8 @@
 <template>
   <div class="wrapper">
-    <div class="one" style="text-align: right; color:white">2016722021 윤인석</div>
+    <div class="one" ></div>
     <left></left>
+    <user></user>
 
     <div class = "resulttb">
       <b-card>
@@ -59,10 +60,17 @@
 
 <script>
 import Left from "./leftsidebar";
+import user from "./userinfo";
 
 export default {
   components:{
-    Left
+    Left,
+    user
+  },
+  computed: {
+    user: function () {
+      return parseInt(this.$store.state.user.pid);
+    }
   },
   created() {
     this.$http.post('/ranking', {user: this.user, selected: this.selected}).then((response) => {
@@ -88,7 +96,6 @@ export default {
   },
   data() {
     return {
-      user:'2018722007',
       year:'',
       sem:'',
       average_grade:0,
