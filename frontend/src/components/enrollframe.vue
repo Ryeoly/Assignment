@@ -25,26 +25,26 @@
       </table>
     </div>
 
-    <div style="grid-area:20/15/22/28; font-size:large; font-weight: bold">수강 신청 자료집</div>
+    <div style="grid-area:20/15/22/28; font-size:large; font-weight: bold; color:white;">수강 신청 자료집</div>
 
-    <div class="enrollclasses">
+    <div class="enrollclasses" style="background-color: #ecfffd ">
       <table class="table">
-          <tr style="background-color: #b9bbbe">
-            <td width="5%">No.</td>
-            <td width="20%">과목 번호</td>
-            <td width="20%">과목 이름</td>
-            <td width="5%">학 점</td>
-            <td width="10%">교수명</td>
-            <td width="5%">여 석</td>
-            <td width="10%">강의 시간</td>
-            <td>비 고</td>
-          </tr>
+        <tr style="color: black">
+          <td width="5%">No.</td>
+          <td width="19.5%">과목 번호</td>
+          <td width="20%">과목 이름</td>
+          <td width="6%">학 점</td>
+          <td width="10%">교수명</td>
+          <td width="6%">여 석</td>
+          <td width="10%">강의 시간</td>
+          <td>비 고</td>
+        </tr>
       </table>
     </div>
 
-    <div style="grid-area: 28/15/71/75; overflow: scroll">
+    <div style="grid-area: 27/15/71/75; overflow: scroll">
       <table class="table card-table table-sm table-bordered">
-        <tr v-for="(item,index) in classes_result" align="center" v-on:click="incart(item)">
+        <tr v-for="(item,index) in classes_result" align="center" class="subject" v-on:click="incart(item)">
           <td class="border" width="5%">{{index+1}}</td>
           <td class="border" width="20%">{{item.snum}}</td>
           <td class="border" width="20%">{{item.sname}}</td>
@@ -61,7 +61,7 @@
     <div style="grid-area:72/15/73/28; font-size:large; font-weight: bold">수강 신청 목록</div>
     <div class="enrollcart" style="overflow: scroll">
       <table class="card-table table table-sm">
-        <tr style="background-color: #b9bbbe">
+        <tr style="background-color: #ecfffd; color: black; font-weight: bolder">
           <td width="5%">No.</td>
           <td width="20%">과목 번호</td>
           <td width="20%">과목 이름</td>
@@ -71,7 +71,7 @@
           <td width="10%">강의 시간</td>
           <td>비 고</td>
         </tr>
-        <tr v-for="(cartlist,index) in cart" align="center" v-on:click="deletecart(cartlist)">
+        <tr v-for="(cartlist,index) in cart" align="center" class="subject" v-on:click="deletecart(cartlist)">
           <td class="border" width="5%">{{index+1}}</td>
           <td class="border" width="20%">{{cartlist.snum}}</td>
           <td class="border" width="20%">{{cartlist.sname}}</td>
@@ -96,8 +96,13 @@ export default {
     Left,
     user
   },
+  computed: {
+    user: function () {
+      return parseInt(this.$store.state.user.pid);
+    }
+  },
   created(){
-    this.$http.post('/enrolltable', {pid:this.pid, semes: this.semes}).then((response) =>{     //created() 는 이 페이지 켜지기 전에 실행되는거고//    https://localhost:3000/test backend로 요청을 넣는 거임
+    this.$http.post('/enrolltable', {pid:this.user, semes: this.semes}).then((response) =>{     //created() 는 이 페이지 켜지기 전에 실행되는거고//    https://localhost:3000/test backend로 요청을 넣는 거임
       console.log(response.data);
       this.classes_result = response.data.rows;                    //response = (backend의 routes/test.js 파일에서 res.send로 결과 보낸거임)
       this.cart=response.data.rows2;
@@ -107,9 +112,7 @@ export default {
   ,
   data(){
     return {
-      pid:'2018722007',
       semes:'21-1',
-      fields: ['snum', 'sname', 'pid','remainder', 'kstime', 'etc'],
       check1 : [],
       check2 : [],
       options1: [
@@ -208,7 +211,7 @@ export default {
           }
           else {
             this.cart.push(item);
-            this.$http.post('/enrolltable/cart', {cartlist: item,pid:this.pid,semes:this.semes}).then((response) => {
+            this.$http.post('/enrolltable/cart', {cartlist: item,pid:this.user,semes:this.semes}).then((response) => {
             });
             var i;
             for (i = 0; i < this.classes_result.length; i++) {
@@ -226,7 +229,7 @@ export default {
     deletecart: function (item) {
       this.yesno2 = confirm('수강 포기 하시겠습니까?');
       if(this.yesno2){
-        this.$http.post('/enrolltable/delcart', {delitem: item.snum, pid: this.pid}).then((response) => {
+        this.$http.post('/enrolltable/delcart', {delitem: item.snum, pid: this.user}).then((response) => {
           var q;
           this.cart = response.data.result2;
           this.classes_result = response.data.rows2;
@@ -244,7 +247,7 @@ export default {
   grid-column-start: 15;
   grid-column-end: 75;
   grid-row-start: 13;
-  grid-row-end: 19;
+  grid-row-end: 18;
   border-top-width: 2px;
   border-bottom-width: 2px;
   background-color: white;
@@ -254,8 +257,9 @@ export default {
   grid-column-start: 15;
   grid-column-end: 75;
   grid-row-start: 23;
-  grid-row-end: 28;
+  grid-row-end: 27;
   border-radius: 5px 5px 5px 5px;
+  background-color: #b9bbbe;
 
 }
 .enrollcart{
@@ -267,5 +271,12 @@ export default {
   border-radius: 5px 5px 5px 5px;
 }
 
+.subject {
+  background-color: white;
+}
+
+.subject:hover {
+  background-color: #ecfffd;
+}
 
 </style>

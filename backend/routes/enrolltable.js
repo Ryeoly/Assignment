@@ -77,7 +77,7 @@ router.post('/delcart', function(req, res, next) {
     var item = req.body.delitem;
     var semes = '21-1';
     var query = connection.query(
-        'delete from score where snum = ? and semester=? and pid=',[item,semes,req.body.pid],
+        'delete from score where snum = ? and semester=? and pid=?',[item,semes,req.body.pid],
         function (err, rows) {
             console.log(rows);
             if (err) console.log(err)        // 만약 에러값이 존재한다면 로그에 표시합니다.

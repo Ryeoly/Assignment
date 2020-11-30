@@ -36,10 +36,7 @@
       </table>
     </div>
 
-
-
-
-    <div class="three" style="background-color: #E2E2E2">
+    <div class="three" style="background-color: white">
       <div v-for="(item,index) in class_list" :style="[index === 0? {backgroundColor:'#FFA7A7'}: index===1 ?
             {backgroundColor:'#B7F0B1'}: index===2 ? {backgroundColor: '#B5B2FF'} : index===3 ? {backgroundColor:'#FFB2F5'} : index===4 ? {backgroundColor:'#D1B2FF'}  : index===5 ?
              {backgroundColor:'#FFE08C'} : index === 6 ?  {backgroundColor:'#B2EBF4'} :  {backgroundColor:'green'}
@@ -54,54 +51,54 @@
       </div>
       <table class="timetable" style="grid-area:1/1/59/38; height: 100%; width: 100%;">
         <tr style="height: 6.9%;">
-          <td style="width: 5.4%;">시간</td>
-          <td style="width: 18.9%;">월</td>
+          <td style="width: 5.1%;">시간</td>
+          <td style="width: 19.1%;">월</td>
           <td style="width: 18.9%;">화</td>
           <td style="width: 18.9%;">수</td>
           <td style="width: 18.9%;">목</td>
           <td style="width: 18.9%;">금</td>
         </tr>
         <tr style="height: 15.5%;">
-          <td style="width: 5.4%;">1</td>
-          <td style="width: 18.9%;"></td>
+          <td style="width: 5.1%;">1</td>
+          <td style="width: 19%;"></td>
           <td style="width: 18.9%;"></td>
           <td style="width: 19%;"></td>
           <td style="width: 18.9%;"></td>
           <td style="width: 18.9%;"></td>
         </tr>
         <tr style="height: 15.5%;">
-          <td style="width: 5.4%;">2</td>
-          <td style="width: 18.9%;"></td>
+          <td style="width: 5.1%;">2</td>
+          <td style="width: 19.1%;"></td>
           <td style="width: 18.9%;"></td>
           <td style="width: 19%;"></td>
           <td style="width: 18.9%;"></td>
           <td style="width: 18.9%;"></td></tr>
         <tr style="height: 15.5%;">
-          <td style="width: 5.4%;">3</td>
-          <td style="width: 18.9%;"></td>
+          <td style="width: 5.1%;">3</td>
+          <td style="width: 19.1%;"></td>
           <td style="width: 18.9%;"></td>
           <td style="width: 19%;"></td>
           <td style="width: 18.9%;"></td>
           <td style="width: 18.9%;"></td>
         </tr>
-        <tr style="height: 15.5%;">
-          <td style="width: 5.4%;">4</td>
-          <td style="width: 18.9%;"></td>
+        <tr style="height: 15.6%;">
+          <td style="width: 5.1%;">4</td>
+          <td style="width: 19.1%;"></td>
           <td style="width: 18.9%;"></td>
           <td style="width: 19%;"></td>
           <td style="width: 18.9%;"></td>
           <td style="width: 18.9%;"></td></tr>
-        <tr style="height: 15.5%;">
-          <td style="width: 5.4%;">5</td>
-          <td style="width: 18.9%;"></td>
+        <tr style="height: 15.6%;">
+          <td style="width: 5.1%;">5</td>
+          <td style="width: 19.1%;"></td>
           <td style="width: 18.9%;"></td>
           <td style="width: 19%;"></td>
           <td style="width: 18.9%;"></td>
           <td style="width: 18.9%;"></td>
         </tr>
         <tr style="height: 15.5%;">
-          <td style="width: 5.4%;">6</td>
-          <td style="width: 18.9%;"></td>
+          <td style="width: 5.1%;">6</td>
+          <td style="width: 19.1%;"></td>
           <td style="width: 18.9%;"></td>
           <td style="width: 19%;"></td>
           <td style="width: 18.9%;"></td>
@@ -174,11 +171,11 @@
   /* 시간표 테마 끝!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
   .timetable{
-    border:1px solid white;
-    border-collapse: collapse
+    /*border:1px solid gray;*/
+    /*border-collapse: collapse*/
   }
   .timetable th, .timetable td{
-    border: 1px solid white;
+    border: 1px solid #f8f9fa;
     text-align: center
   }
 
