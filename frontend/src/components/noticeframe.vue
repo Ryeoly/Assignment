@@ -1,7 +1,6 @@
 <template>
   <div class="wrapper">
     <div class="one"></div>
-
     <left></left>           <!-- 여기가 left바-------------------------------------------------------------------------------------- -->
     <user></user>
     <div class="notice" style="background-color: white">
@@ -19,7 +18,7 @@
         </thead>
         <tbody>
         <tr v-for="(item, index) in paginatedData" :key="item">
-          <td> {{ (pageNum * 10)+index}} </td>
+          <td> {{ (pageNum * 10)+index+1}} </td>
           <td><router-link v-bind:to="{name: 'view', params: {index:item.idx}}">{{item.title}}</router-link></td>
           <td> {{item.file}} </td>
           <td> {{item.writer}} </td>
@@ -30,20 +29,24 @@
       </table>
     </div>
     <div class="page-button">
-      <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
+      <b-button :disabled="pageNum === 0" v-on:click="prevPage">
         이전
-      </button>
+      </b-button>
       <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
-      <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">
+      <b-button :disabled="pageNum >= pageCount - 1" v-on:click="nextPage">
         다음
-      </button>
+      </b-button>
     </div>
 
 
     <div class="searchbox">
-      <font-awesome-icon class = "icon" ria-hidden="true" icon="search"/>
-      <b-form-input v-model="Title" placeholder="제목을 입력하세요"></b-form-input>
-      <b-button v-on:click="search">검색</b-button>
+      <b-input-group size="sm" class="mb-2">
+        <b-input-group-prepend is-text>
+          <b-icon icon="search"></b-icon>
+        </b-input-group-prepend>
+        <b-form-input type="search" v-model="Title" placeholder="제목을 입력하세요"></b-form-input>
+        <b-button v-on:click="search">검색</b-button>
+      </b-input-group>
     </div>
     <div class="select-subject">
       <b-dropdown text="강의 목록" class="m-md-2">
@@ -177,6 +180,17 @@ export default {
   grid-template-rows: repeat(100, 1fr);
   height: 100vh;
 }
+.one {
+  grid-column: 2/78;
+  grid-row: 1/28;
+  border-radius: 5px 5px 5px 5px;
+  background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%);
+  padding-top: 10px;
+  padding-right: 5px;
+  background-color: #5758bb;
+  box-shadow: 2px 4px 2px lightgray;
+  font-weight: 500;
+}
 .notice {
   grid-column: 15 / 65;
   grid-row: 23 / 95;
@@ -194,64 +208,32 @@ export default {
   color: darkgrey;
 }
 .page-button {
-  grid-column: 32 / 52;
+  grid-column: 35 / 55;
   grid-row: 89 / 93;
   background-color: white;
-}
-.page-btn {
-  width: 5rem;
-  height: 2rem;
-  letter-spacing: 0.5px;
 }
 .page-count {
   padding: 0 1rem;
 }
 .select-subject {
-  grid-column: 45 / 52;
+  grid-column: 43 / 47;
   grid-row: 25 / 29;
   background-color: white;
   margin-top: 0;
 }
 .searchbox {
-  grid-column: 52 / 63;
+  grid-column: 48 / 63;
   grid-row: 26 / 30;
   background-color: white;
-  width: 200px;
   vertical-align: middle;
   white-space: nowrap;
   position: relative;
-
 }
 .searchbox input {
-  width: 200px;
-  height: 40px;
-  border: 1px solid #5e72e4;
-  font-size: 13pt;
-  float: left;
-  color: #5e72e4;
-  padding-left: 45px;
+  font-size: 14pt;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-
-}
-.searchbox input::-webkit-input-placeholder {
-  color: #5e72e4;
-}
-.searchbox input::-moz-placeholder {
-  color: #5e72e4;
-}
-.searchbox input::-moz-placeholder {
-  color: #5e72e4;
-}
-.searchbox input:-ms-input-placeholder{
-  color: #5e72e4;
-}
-.searchbox .icon {
-  position: absolute;
-  margin-left: 17px;
-  margin-top: 13px;
-  color: #5e72e4;
 }
 .professor-info {
   grid-column: 66 / 77;

@@ -40,7 +40,7 @@ router.post('/main', function (req, res, next) {
             function (err, rows2) {
                 if (err) console.log(err)        // 만약 에러값이 존재한다면 로그에 표시합니다.
                 connection.query(
-                    'select * from score, notice, subject where score.snum = notice.snum and score.pid = ? and score.snum = subject.snum order by date DESC limit 6', [req.body.user],
+                    'select * from score, notice, subject where score.snum = notice.snum and score.pid = ? and score.snum = subject.snum order by date DESC limit 4', [req.body.user],
                     function (err, notice) {
                         if (err) console.log(err)        // 만약 에러값이 존재한다면 로그에 표시합니다.
                         res.json({rows2, notice});

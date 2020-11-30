@@ -9,41 +9,62 @@
     <left></left>           <!-- 여기가 left바-------------------------------------------------------------------------------------- -->
     <user></user>
     <transition name="insert" appear>
-    <div class="five" style=" display: table; background-color: lightgrey; position: relative">
-      <p class="notice-pretty" style="margin-left: 10%; font-weight: bold; border-bottom: #825ee4; border-bottom: 1px">과목별
-        <span class="notice-pretty2" style="color: #825ee4">NOTICE</span>
-      </p>
-      <ul class="latest-notice" v-for="item in notice_list" :key="item" style="margin-left: 10%">
-        <li class="border3" style="border: none; width: 100%">
-          <span style="font-weight: bold; margin-left: -20%">{{$moment(item.date).format('MM/DD')}}</span>
-          <span style="margin-left: 5%; font-weight: bold">{{item.sname}}</span>
-          <span style="margin-left: 5%; font-weight: bold">{{item.title}}</span>
-        </li>
-      </ul>
+    <div class="five" style=" display: table; background-color: white; position: relative; overflow: auto">
+
+      <div class="notice-title" style="font-size: x-large">
+        <p style="font-weight: bolder; font-size: large; width: 100%; margin-left: 0; margin-top: 3%; margin-bottom: 3%">
+          <span style="font-size: x-large; font-weight: bolder">
+            &nbsp;과목별&nbsp;
+          </span>
+          <span style="color: #825ee4">
+          NOTICE
+          </span>
+        </p>
+      </div>
+      <table class="table" style="width: 100%">
+<!--        <thead  class="notice-pretty" style="font-size: x-large; font-weight: bold; border-bottom: #825ee4">-->
+<!--            과목별<span style="color: #825ee4">NOTICE</span>-->
+<!--        </thead>-->
+        <tr class="latest-notice" v-for="item in notice_list" :key="item" style="margin-left: 10%; width: 100%">
+          <td style="width: 10%">
+            {{$moment(item.date).format('MM/DD')}}
+          </td>
+          <td style="width: 30%" >
+            {{item.sname}}
+          </td>
+          <td style="width: 60%;">
+            {{item.title}}
+          </td>
+        </tr>
+      </table>
     </div>
     </transition>
 
     <transition name="insert" appear>
-    <div class="two" style="display: table; background-color: #5758bb">
-      <table class="subject-table table" style="color: #cce5ff" >
-        <thead class="thead-light" style="text-align: left; height: 10px">
-        <p style="font-weight: bolder; font-size: large; width: 100%">
-          <span style="font-size: x-large; font-weight: bolder; margin-right: 8%; color: #cce5ff">
-            2020학년도 2학기
+    <div class="two" style="display: table; background-color: white">
+      <table class="table-hover" style="color: black; width: 100%" >
+        <thead class="thead-light" style="text-align: left; height: 10px; border-bottom: 1px solid #e2e2e2">
+        <p style="font-weight: bolder; font-size: large; width: 100%; margin-left: 0; margin-top: 3%; margin-bottom: 3%">
+          <span style="font-size: x-large; font-weight: bolder">
+            &nbsp;수강 과목&nbsp;
           </span>
-          수강 과목
+          <span style="color: gray">
+          (2020학년도 2학기)
+          </span>
         </p>
         </thead>
         <tbody style="text-align:left">
-        <tr  v-for="(item, index) in class_list" :key="item">
-          <td class="border4"><span style="font-weight: bold; color: darkgrey">{{index+1}}.</span>  {{ item.sname}} ({{ item.stime}})</td>
-          <td class="border5"><router-link  style="font-size: large" v-bind:to="{name: 'notice', params: {snum: item.snum}}">공지사항</router-link></td>
+        <tr  v-for="item in class_list" :key="item">
+          <td class="border4" style="margin-bottom: 1%">&nbsp;{{ item.sname}} ({{ item.stime}})</td>
+          <td class="border5">
+                <button style="background-color: #ffac71; border: 2px solid #ffac71; border-radius: 5px; color: white; font-weight: bold" v-on:click="go_notice(item.snum)">공지사항</button>
         </tr>
         </tbody>
       </table>
     </div>
     </transition>
 
+    <transition name="insert" appear>
     <div class="three" style="background-color: white">
       <div v-for="(item,index) in class_list" :style="[index === 0? {backgroundColor:'#FFA7A7'}: index===1 ?
             {backgroundColor:'#B7F0B1'}: index===2 ? {backgroundColor: '#B5B2FF'} : index===3 ? {backgroundColor:'#FFB2F5'} : index===4 ? {backgroundColor:'#D1B2FF'}  : index===5 ?
@@ -145,13 +166,16 @@
         this.class_list = response.data.rows2;
         this.notice_list = response.data.notice;
       })
+    },
+    methods: {
+      go_notice: function (data){
+        this.$router.push({name: 'notice', params: {snum: data}});
+      }
     }
   }
 </script>
 
-    <transition name="insert" appear>
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&display=swap');
   @import '../style/basicstyle.scss';
   @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&display=swap');
   /*시간표 테마*/
@@ -186,7 +210,7 @@
     /*border-collapse: collapse*/
   }
   .timetable th, .timetable td{
-    border: 1px solid #f8f9fa;
+    border: 2px solid #f8f9fa;
     text-align: center
   }
   .geul {

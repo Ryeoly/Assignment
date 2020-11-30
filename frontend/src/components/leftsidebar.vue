@@ -65,15 +65,31 @@
     <b-toast id="friendtable-toast" title="친구 시간표" no-auto-hide >
       <div v-if="this.friend_table !== NULL" style="display: grid; grid-template-columns: repeat(40, 1fr);
   grid-template-rows: repeat(60, 1fr); ">
-        <div v-for="(item,index) in friend_table" :style="[index === 0? {backgroundColor:'#D9E4BF'}: index===1 ?
-            {backgroundColor:'#DDE5F0'}: index===2 ? {backgroundColor: '#F5D5B7'} : index===3 ? {backgroundColor:'#E0E0E0'} : index===4 ? {backgroundColor:'#F4F4F4'}  : index===5 ?
-             {backgroundColor:'purple'} : index === 6 ?  {backgroundColor:'gray'} :  {backgroundColor:'green'}
+        <table style="grid-area:1/1/59/38; height: 100%; width: 100%;">
+          <tr style="height: 3%">
+            <td style="width: 5.4%; text-align: center"></td>
+            <td style="width: 18.9%; text-align: center">월</td>
+            <td style="width: 18.9%; text-align: center">화</td>
+            <td style="width: 18.9%; text-align: center">수</td>
+            <td style="width: 18.9%; text-align: center">목</td>
+            <td style="width: 18.9%; text-align: center">금</td>
+          </tr>
+          <tr style="height: 15.5%; text-align: center"><td>1</td></tr>
+          <tr style="height: 15.5%; text-align: center"><td>2</td></tr>
+          <tr style="height: 15.5%; text-align: center"><td>3</td></tr>
+          <tr style="height: 15.5%; text-align: center"><td>4</td></tr>
+          <tr style="height: 15.5%; text-align: center"><td>5</td></tr>
+          <tr style="height: 15.5%; text-align: center"><td>6</td></tr>
+        </table>
+        <div v-for="(item,index) in friend_table" :style="[index === 0? {backgroundColor:'#FFA7A7'}: index===1 ?
+            {backgroundColor:'#B7F0B1'}: index===2 ? {backgroundColor: '#B5B2FF'} : index===3 ? {backgroundColor:'#FFB2F5'} : index===4 ? {backgroundColor:'#D1B2FF'}  : index===5 ?
+             {backgroundColor:'#FFE08C'} : index === 6 ?  {backgroundColor:'#B2EBF4'} :  {backgroundColor:'green'}
             ,{gridColumnStart:item.grid_time.split(',')[2], gridColumnEnd:item.grid_time.split(',')[3],
             gridRowStart:item.grid_time.split(',')[0], gridRowEnd:item.grid_time.split(',')[1]}]">{{item.sname}}
         </div>
-        <div v-for="(item,index) in friend_table" :style="[index === 0? {backgroundColor:'#D9E4BF'}: index===1 ?
-            {backgroundColor:'#DDE5F0'}: index===2 ? {backgroundColor:'#F5D5B7'} : index===3 ? {backgroundColor:'#E0E0E0'} : index===4 ? {backgroundColor:'#F4F4F4'}  : index===5 ?
-             {backgroundColor:'purple'} : index === 6 ?  {backgroundColor:'gray'} :  {backgroundColor:'green'}
+        <div v-for="(item,index) in friend_table" :style="[index === 0? {backgroundColor:'#FFA7A7'}: index===1 ?
+            {backgroundColor:'#B7F0B1'}: index===2 ? {backgroundColor:'#B5B2FF'} : index===3 ? {backgroundColor:'#FFB2F5'} : index===4 ? {backgroundColor:'#D1B2FF'}  : index===5 ?
+             {backgroundColor:'#FFE08C'} : index === 6 ?  {backgroundColor:'#B2EBF4'} :  {backgroundColor:'green'}
             ,{gridColumnStart:item.grid_time.split(',')[6], gridColumnEnd:item.grid_time.split(',')[7],
             gridRowStart:item.grid_time.split(',')[4], gridRowEnd:item.grid_time.split(',')[5]}]">{{item.sname}}
         </div>
