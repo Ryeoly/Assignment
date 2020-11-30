@@ -13,12 +13,14 @@ let connection = mysql.createConnection({
 /* GET users listing. */
 router.post('/', function(req, res, next) {
     var query = connection.query(
-        'select * from subject',
+        'select *, person.name as p_name from subject, person where subject.pid = person.pid',
         function (err, rows) {
             console.log(rows);
             if (err) console.log(err)        // 만약 에러값이 존재한다면 로그에 표시합니다.
             var query2 = connection.query(
-                'select sub.* from subject as sub, score as sc where sub.snum = sc.snum and sc.pid =? and sub.semester=?',[req.body.pid,req.body.semes],
+                'select cart.*, p.name as p_name\n' +
+                'from (select sub.* from subject as sub, score as sc where sub.snum = sc.snum and sc.pid = ? and sc.semester= ?) as cart, person as p\n' +
+                'where cart.pid = p.pid;\n',[req.body.pid,req.body.semes],
                 function (err2, rows2) {
                     console.log(rows2);
                     if (err2) console.log(err2)        // 만약 에러값이 존재한다면 로그에 표시합니다.
@@ -40,7 +42,10 @@ router.post('/detail', function(req, res, next) {
     if(number.length === 0){
         number = '%';
     }
-    const result = type+'-'+majorr+'-'+number+'%';
+    if(type === '2'){
+        type = '%';
+    }
+    const result = type+'-'+number+'-'+majorr+'%';
     var query = connection.query(
         'select * from subject where snum like ?',result,
         function (err, search_result) {
@@ -70,23 +75,33 @@ router.post('/cart', function(req, res, next) {
 
 router.post('/delcart', function(req, res, next) {
     var item = req.body.delitem;
+    var semes = '21-1';
     var query = connection.query(
-        'delete from score where snum = ?',item,
+        'delete from score where snum = ? and semester=? and pid=',[item,semes,req.body.pid],
         function (err, rows) {
             console.log(rows);
             if (err) console.log(err)        // 만약 에러값이 존재한다면 로그에 표시합니다.
+            var query3 = connection.query(
+                'update subject set remainder = remainder+1 where snum = ?',item,
+                function (err3, rows3) {
+                    console.log(rows3);
+                    if (err3) console.log(err3)        // 만약 에러값이 존재한다면 로그에 표시합니다.
+                    var query2 = connection.query(
+                        'select *, person.name as p_name from subject, person where subject.pid = person.pid',
+                        function (err2, rows2) {
+                            console.log(rows2);
+                            if (err2) console.log(err2)        // 만약 에러값이 존재한다면 로그에 표시합니다.
+                            var query4 = connection.query(
+                                'select cart.*, p.name as p_name\n' +
+                                'from (select sub.* from subject as sub, score as sc where sub.snum = sc.snum and sc.pid = ? and sc.semester= ?) as cart, person as p\n' +
+                                'where cart.pid = p.pid;\n',[req.body.pid, semes],
+                                function (err2, result2) {
+                                    console.log(result2);
+                                    if (err2) console.log(err2)        // 만약 에러값이 존재한다면 로그에 표시합니다.
+                                    res.json({rows2,result2});
+                                });
+                        });
+                });
         });
-    var query2 = connection.query(
-        'select sub.* from subject as sub, score as sc where sc.pid = ? and sc.snum=sub.snum',req.body.pid,
-        function (err2, rows2) {
-            console.log(rows2);
-            if (err2) console.log(err2)        // 만약 에러값이 존재한다면 로그에 표시합니다.
-            res.json(rows2);
-        });
-    var query3 = connection.query(
-        'update subject set remainder = remainder+1 where snum = ?',item,
-        function (err3, rows3) {
-            console.log(rows3);
-            if (err3) console.log(err3)        // 만약 에러값이 존재한다면 로그에 표시합니다.
-        });
+
 });

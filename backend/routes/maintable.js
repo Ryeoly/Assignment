@@ -32,6 +32,9 @@ router.post('/', function (req, res, next) {
 });
 
 router.post('/main', function (req, res, next) {
+    var a=0;
+    var b = req.body.user;
+    var c = req.body.semes;
     connection.query(
         'select sub.* from score as sc, subject as sub where sc.pid = ? and sc.snum=sub.snum and sc.semester=?', [req.body.user, req.body.semes],
         function (err, rows2) {
@@ -114,6 +117,8 @@ router.post('/reject', function (req, res, next) {
 });
 
 router.post('/calltable', function (req, res, next) {
+    var a = req.body.friend_pid;
+    var b = req.body.semes;
     var query = connection.query(
         'select sub.* from score as sc, subject as sub where sc.pid = ? and sc.snum=sub.snum and sc.semester=?', [req.body.friend_pid, req.body.semes],
         function (err, friend_table) {

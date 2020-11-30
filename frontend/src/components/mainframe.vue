@@ -2,7 +2,8 @@
   <div class="wrapper">
 
     <div class="one"></div>
-
+    <left></left>           <!-- 여기가 left바-------------------------------------------------------------------------------------- -->
+    <user></user>
     <div class="five" style=" display: table; background-color: lightgrey; position: relative">
       <p class="notice-pretty" style="margin-left: 10%; font-weight: bold; border-bottom: #825ee4; border-bottom: 1px">과목별
         <span class="notice-pretty2" style="color: #825ee4">NOTICE</span>
@@ -35,44 +36,78 @@
       </table>
     </div>
 
-    <div class="three" style="background-color:white">
-      <table style="grid-area:1/1/59/38; height: 100%; width: 100%">
-        <tr style="height: 7%">
-          <td style="width: 5%; text-align: center">시간</td>
-          <td style="width: 19%; text-align: center">월</td>
-          <td style="width: 19%; text-align: center">화</td>
-          <td style="width: 19%; text-align: center">수</td>
-          <td style="width: 19%; text-align: center">목</td>
-          <td style="width: 19%; text-align: center">금</td>
-        </tr>
-        <tr style="height: 15%; text-align: center"><td>1</td></tr>
-        <tr style="height: 15%; text-align: center"><td>2</td></tr>
-        <tr style="height: 15%; text-align: center"><td>3</td></tr>
-        <tr style="height: 15%; text-align: center"><td>4</td></tr>
-        <tr style="height: 15%; text-align: center"><td>5</td></tr>
-        <tr style="height: 15%; text-align: center"><td>6</td></tr>
-      </table>
-      <div v-for="(item,index) in class_list" :style="[index === 0? {backgroundColor:'#D9E4BF'}: index===1 ?
-            {backgroundColor:'#DDE5F0'}: index===2 ? {backgroundColor: '#F5D5B7'} : index===3 ? {backgroundColor:'#E0E0E0'} : index===4 ? {backgroundColor:'#F4F4F4'}  : index===5 ?
-             {backgroundColor:'purple'} : index === 6 ?  {backgroundColor:'gray'} :  {backgroundColor:'green'}
+
+
+
+    <div class="three" style="background-color: #E2E2E2">
+      <div v-for="(item,index) in class_list" :style="[index === 0? {backgroundColor:'#FFA7A7'}: index===1 ?
+            {backgroundColor:'#B7F0B1'}: index===2 ? {backgroundColor: '#B5B2FF'} : index===3 ? {backgroundColor:'#FFB2F5'} : index===4 ? {backgroundColor:'#D1B2FF'}  : index===5 ?
+             {backgroundColor:'#FFE08C'} : index === 6 ?  {backgroundColor:'#B2EBF4'} :  {backgroundColor:'green'}
             ,{gridColumnStart:item.grid_time.split(',')[2], gridColumnEnd:item.grid_time.split(',')[3],
             gridRowStart:item.grid_time.split(',')[0], gridRowEnd:item.grid_time.split(',')[1]}]">{{item.sname}}
       </div>
-      <div v-for="(item,index) in class_list" :style="[index === 0? {backgroundColor:'#D9E4BF'}: index===1 ?
-            {backgroundColor:'#DDE5F0'}: index===2 ? {backgroundColor:'#F5D5B7'} : index===3 ? {backgroundColor:'#E0E0E0'} : index===4 ? {backgroundColor:'#F4F4F4'}  : index===5 ?
-             {backgroundColor:'purple'} : index === 6 ?  {backgroundColor:'gray'} :  {backgroundColor:'green'}
+      <div v-for="(item,index) in class_list" :style="[index === 0? {backgroundColor:'#FFA7A7'}: index===1 ?
+            {backgroundColor:'#B7F0B1'}: index===2 ? {backgroundColor:'#B5B2FF'} : index===3 ? {backgroundColor:'#FFB2F5'} : index===4 ? {backgroundColor:'#D1B2FF'}  : index===5 ?
+             {backgroundColor:'#FFE08C'} : index === 6 ?  {backgroundColor:'#B2EBF4'} :  {backgroundColor:'green'}
             ,{gridColumnStart:item.grid_time.split(',')[6], gridColumnEnd:item.grid_time.split(',')[7],
             gridRowStart:item.grid_time.split(',')[4], gridRowEnd:item.grid_time.split(',')[5]}]">{{item.sname}}
       </div>
+      <table class="timetable" style="grid-area:1/1/59/38; height: 100%; width: 100%;">
+        <tr style="height: 6.9%;">
+          <td style="width: 5.4%;">시간</td>
+          <td style="width: 18.9%;">월</td>
+          <td style="width: 18.9%;">화</td>
+          <td style="width: 18.9%;">수</td>
+          <td style="width: 18.9%;">목</td>
+          <td style="width: 18.9%;">금</td>
+        </tr>
+        <tr style="height: 15.5%;">
+          <td style="width: 5.4%;">1</td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 19%;"></td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 18.9%;"></td>
+        </tr>
+        <tr style="height: 15.5%;">
+          <td style="width: 5.4%;">2</td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 19%;"></td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 18.9%;"></td></tr>
+        <tr style="height: 15.5%;">
+          <td style="width: 5.4%;">3</td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 19%;"></td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 18.9%;"></td>
+        </tr>
+        <tr style="height: 15.5%;">
+          <td style="width: 5.4%;">4</td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 19%;"></td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 18.9%;"></td></tr>
+        <tr style="height: 15.5%;">
+          <td style="width: 5.4%;">5</td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 19%;"></td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 18.9%;"></td>
+        </tr>
+        <tr style="height: 15.5%;">
+          <td style="width: 5.4%;">6</td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 19%;"></td>
+          <td style="width: 18.9%;"></td>
+          <td style="width: 18.9%;"></td></tr>
+      </table>
     </div>
-
-
-
-
-
-    <left></left>           <!-- 여기가 left바-------------------------------------------------------------------------------------- -->
-    <user></user>
-
   </div>
 </template>
 
@@ -88,10 +123,10 @@
     data() {
       return {
         friend_id:'',
+        class_list:[{snum:'', sname:'', grid_time:''}],
+        notice_list:[],
         friend_table:[],
-        semester: '20-2',
-        class_list: [{snum:'', sname:'', grid_time:''}],
-        notice_list: []
+        semester: '20-2'
       }
     },
     computed: {
@@ -138,5 +173,13 @@
 
   /* 시간표 테마 끝!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+  .timetable{
+    border:1px solid white;
+    border-collapse: collapse
+  }
+  .timetable th, .timetable td{
+    border: 1px solid white;
+    text-align: center
+  }
 
 </style>

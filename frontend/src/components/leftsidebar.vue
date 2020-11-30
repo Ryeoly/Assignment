@@ -1,5 +1,6 @@
 <template>
-  <div class="left" style="background-color:white" >
+  <div class="left" style="background-color:white">
+
     <img src="../assets/Bluemango_logo.png" alt="Logo" title="bluemango" style="width: 100%">
     <ul class="mylist">
       <li><router-link to="/main">메인</router-link></li>
@@ -52,15 +53,31 @@
     <b-toast id="friendtable-toast" title="친구 시간표" no-auto-hide >
       <div v-if="this.friend_table !== NULL" style="display: grid; grid-template-columns: repeat(40, 1fr);
   grid-template-rows: repeat(60, 1fr); ">
-        <div v-for="(item,index) in friend_table" :style="[index === 0? {backgroundColor:'#D9E4BF'}: index===1 ?
-            {backgroundColor:'#DDE5F0'}: index===2 ? {backgroundColor: '#F5D5B7'} : index===3 ? {backgroundColor:'#E0E0E0'} : index===4 ? {backgroundColor:'#F4F4F4'}  : index===5 ?
-             {backgroundColor:'purple'} : index === 6 ?  {backgroundColor:'gray'} :  {backgroundColor:'green'}
+        <table style="grid-area:1/1/59/38; height: 100%; width: 100%;">
+          <tr style="height: 3%">
+            <td style="width: 5.4%; text-align: center"></td>
+            <td style="width: 18.9%; text-align: center">월</td>
+            <td style="width: 18.9%; text-align: center">화</td>
+            <td style="width: 18.9%; text-align: center">수</td>
+            <td style="width: 18.9%; text-align: center">목</td>
+            <td style="width: 18.9%; text-align: center">금</td>
+          </tr>
+          <tr style="height: 15.5%; text-align: center"><td>1</td></tr>
+          <tr style="height: 15.5%; text-align: center"><td>2</td></tr>
+          <tr style="height: 15.5%; text-align: center"><td>3</td></tr>
+          <tr style="height: 15.5%; text-align: center"><td>4</td></tr>
+          <tr style="height: 15.5%; text-align: center"><td>5</td></tr>
+          <tr style="height: 15.5%; text-align: center"><td>6</td></tr>
+        </table>
+        <div v-for="(item,index) in friend_table" :style="[index === 0? {backgroundColor:'#FFA7A7'}: index===1 ?
+            {backgroundColor:'#B7F0B1'}: index===2 ? {backgroundColor: '#B5B2FF'} : index===3 ? {backgroundColor:'#FFB2F5'} : index===4 ? {backgroundColor:'#D1B2FF'}  : index===5 ?
+             {backgroundColor:'#FFE08C'} : index === 6 ?  {backgroundColor:'#B2EBF4'} :  {backgroundColor:'green'}
             ,{gridColumnStart:item.grid_time.split(',')[2], gridColumnEnd:item.grid_time.split(',')[3],
             gridRowStart:item.grid_time.split(',')[0], gridRowEnd:item.grid_time.split(',')[1]}]">{{item.sname}}
         </div>
-        <div v-for="(item,index) in friend_table" :style="[index === 0? {backgroundColor:'#D9E4BF'}: index===1 ?
-            {backgroundColor:'#DDE5F0'}: index===2 ? {backgroundColor:'#F5D5B7'} : index===3 ? {backgroundColor:'#E0E0E0'} : index===4 ? {backgroundColor:'#F4F4F4'}  : index===5 ?
-             {backgroundColor:'purple'} : index === 6 ?  {backgroundColor:'gray'} :  {backgroundColor:'green'}
+        <div v-for="(item,index) in friend_table" :style="[index === 0? {backgroundColor:'#FFA7A7'}: index===1 ?
+            {backgroundColor:'#B7F0B1'}: index===2 ? {backgroundColor:'#B5B2FF'} : index===3 ? {backgroundColor:'#FFB2F5'} : index===4 ? {backgroundColor:'#D1B2FF'}  : index===5 ?
+             {backgroundColor:'#FFE08C'} : index === 6 ?  {backgroundColor:'#B2EBF4'} :  {backgroundColor:'green'}
             ,{gridColumnStart:item.grid_time.split(',')[6], gridColumnEnd:item.grid_time.split(',')[7],
             gridRowStart:item.grid_time.split(',')[4], gridRowEnd:item.grid_time.split(',')[5]}]">{{item.sname}}
         </div>
@@ -71,74 +88,74 @@
 </template>
 
 <script>
-export default {
-  beforeMount() {
-    this.db_init();
-  },
-  data() {
-    return {
-      semester: '20-2',
-      friend_table: [],
-      friend_id:''
-    }
-  },
-  computed: {
-    user: function () {
-      return parseInt(this.$store.state.user.pid);
-    }
-  },
-  methods: {
-    db_init: function() {
-      this.$http.post('/maintable', {user: this.user, semes:this.semester}).then((response) => {
-        let db_result = response.data;
-        console.log(db_result);
-        this.$store.commit("set_friend", db_result.friend_list);
-        this.$store.commit("set_apply", db_result.apply_list);
-      })
+  export default {
+    beforeMount() {
+      this.db_init();
     },
-    add_friend: function(){
-      this.$http.post('/maintable/add_friend', {user: this.user, friend: this.friend_id}).then((response) => {
-        if(response.data.result[0]==='error'){
-          alert('친구 신청 실패(존재하지 않는 pid)');
-        }
-        else if(response.data.result[0]==='success'){
-          alert('친구 신청 성공');
-        }
-        else if(response.data.result[0]==='already'){
-          alert('이미 친구 입니다.');
-        }
-        else if(response.data.result[0]==='already_apply'){
-          alert('이미 친구 신청 했습니다.');
-        }
-        else if(response.data.result[0]==='same'){
-          alert('자기 자신은 친구로 할 수 없습니다');
-        }
-      });
+    data() {
+      return {
+        semester: '20-2',
+        friend_table: [],
+        friend_id:''
+      }
     },
-    accept_friend: function (data, name) {
-      console.log(name);
-      this.$store.commit("del_apply", data);
-      this.$http.post('/maintable/accept', {friend_pid: data, user: this.user}).then((response) => {
-        if(response.data.result[0]==='error') {
-          alert('친구 수락 실패');
-        }
-        else{
-          alert('친구 수락 성공');
-          this.$store.commit("add_friend", {pid: data, name: name});
-          console.log("friend_list"+ this.friend_list);
-        }
-      })
+    computed: {
+      user: function () {
+        return parseInt(this.$store.state.user.pid);
+      }
     },
-    reject_friend: function (data) {
-      this.$http.post('/maintable/reject', {friend_pid: data, user: this.user});
-      this.$store.commit("del_apply", data);
-      alert('친구 수락 거절');
-    },
-    calltable: function(f_pid){
-      this.$http.post('/maintable/calltable', {friend_pid : f_pid, semes: this.semester}).then((response) => {
-        this.friend_table = response.data;
-      });
+    methods: {
+      db_init: function() {
+        this.$http.post('/maintable', {user: this.user, semes:this.semester}).then((response) => {
+          let db_result = response.data;
+          console.log(db_result);
+          this.$store.commit("set_friend", db_result.friend_list);
+          this.$store.commit("set_apply", db_result.apply_list);
+        })
+      },
+      add_friend: function(){
+        this.$http.post('/maintable/add_friend', {user: this.user, friend: this.friend_id}).then((response) => {
+          if(response.data.result[0]==='error'){
+            alert('친구 신청 실패(존재하지 않는 pid)');
+          }
+          else if(response.data.result[0]==='success'){
+            alert('친구 신청 성공');
+          }
+          else if(response.data.result[0]==='already'){
+            alert('이미 친구 입니다.');
+          }
+          else if(response.data.result[0]==='already_apply'){
+            alert('이미 친구 신청 했습니다.');
+          }
+          else if(response.data.result[0]==='same'){
+            alert('자기 자신은 친구로 할 수 없습니다');
+          }
+        });
+      },
+      accept_friend: function (data, name) {
+        console.log(name);
+        this.$store.commit("del_apply", data);
+        this.$http.post('/maintable/accept', {friend_pid: data, user: this.user}).then((response) => {
+          if(response.data.result[0]==='error') {
+            alert('친구 수락 실패');
+          }
+          else{
+            alert('친구 수락 성공');
+            this.$store.commit("add_friend", {pid: data, name: name});
+            console.log("friend_list"+ this.friend_list);
+          }
+        })
+      },
+      reject_friend: function (data) {
+        this.$http.post('/maintable/reject', {friend_pid: data, user: this.user});
+        this.$store.commit("del_apply", data);
+        alert('친구 수락 거절');
+      },
+      calltable: function(f_pid){
+        this.$http.post('/maintable/calltable', {friend_pid : f_pid, semes: this.semester}).then((response) => {
+          this.friend_table = response.data;
+        });
+      }
     }
   }
-}
 </script>
