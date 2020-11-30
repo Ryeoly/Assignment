@@ -3,6 +3,27 @@
     <div class="one"></div>
     <left></left>
     <user></user>
+
+    <div class="hot_deal_wrapper">
+      <b-card>
+        <b-card-header>핫딜</b-card-header>
+        <b-card-body>
+          <tr>
+            <transition name="hotdeal" mode="out-in">
+              <td class="hot" v-for="(item, index) in hotdeals" v-if="show_list[index]" :key="item.sname">{{item.snum}}</td>
+            </transition>
+            <transition name="hotdeal" mode="out-in">
+              <td class="hot" v-for="(item, index) in hotdeals" v-if="show_list[index]" :key="item.sname">{{item.sname}}</td>
+            </transition>
+            <transition name="hotdeal" mode="out-in">
+              <td class="hot" v-for="(item, index) in hotdeals" v-if="show_list[index]" :key="item.sname">여석: {{item.remainder}}</td>
+            </transition>
+          </tr>
+        </b-card-body>
+      </b-card>
+    </div>
+
+
     <div class="enrollsearch">
       <table class="card-table table">
         <tr>
@@ -102,16 +123,26 @@ export default {
     }
   },
   created(){
-    this.$http.post('/enrolltable', {pid:this.user, semes: this.semes}).then((response) =>{     //created() 는 이 페이지 켜지기 전에 실행되는거고//    https://localhost:3000/test backend로 요청을 넣는 거임
-      console.log(response.data);
+    this.$http.post('http://localhost:3000/enrolltable', {pid:this.user, semes: this.semes}).then((response) =>{     //created() 는 이 페이지 켜지기 전에 실행되는거고//    https://localhost:3000/test backend로 요청을 넣는 거임
       this.classes_result = response.data.rows;                    //response = (backend의 routes/test.js 파일에서 res.send로 결과 보낸거임)
       this.cart=response.data.rows2;
-      console.log(this.cart);
     })
+    this.$http.get('http://localhost:3000/enrolltable/hotdeal').then((response) =>{     //created() 는 이 페이지 켜지기 전에 실행되는거고//    https://localhost:3000/test backend로 요청을 넣는 거임
+      console.log(response.data);
+      this.hotdeals = response.data.subject;                    //response = (backend의 routes/test.js 파일에서 res.send로 결과 보낸거임)
+      let count = response.data.subject.length;
+      this.show_list = new Array(count).fill(false);
+      this.show_list[0] = true;
+    })
+    setInterval(function() {
+      this.show_list.unshift(this.show_list.pop() === true);
+    }.bind(this), 3000);
   }
   ,
   data(){
     return {
+      show_list: [],
+      hotdeals: [],
       semes:'21-1',
       check1 : [],
       check2 : [],
@@ -279,4 +310,32 @@ export default {
   background-color: #ecfffd;
 }
 
+.hot_deal_wrapper {
+  grid-area: 4/15/11/35;
+}
+.card{
+  height:100%;
+}
+.card-body {
+  padding:0;
+}
+.card-header {
+  padding: 0 0 0 .75rem;
+}
+.hotdeal-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.hotdeal-enter-active, .hotdeal-leave-active {
+  transition: all 1s;
+}
+.hotdeal-enter, .hotdeal-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.hot {
+  padding-left: .5rem;
+  padding-right: 1.25rem;
+  padding-top: .5rem;
+}
 </style>

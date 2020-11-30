@@ -310,7 +310,7 @@ export default {
     check_pid: function () {
       if(this.pid.length === 0) this.pid_check = null;
       else if(this.pid.length===10) {
-        this.$http.post('http://localhost:3000/api/pid', {pid: this.pid}).then(response => {
+        this.$http.post('/api/pid', {pid: this.pid}).then(response => {
           if(response.data.isSuccess === false) this.pid_msg = "없는 학번입니다."
           this.pid_check = !!response.data.isSuccess;
         });
@@ -321,7 +321,7 @@ export default {
       }
     },
     loginEL: function () {
-        this.$http.post("http://localhost:3000/api/login", {pid: this.pid, pwd: this.pwd}, { "Content-Type": "application-json" })
+        this.$http.post("/api/login", {pid: this.pid, pwd: this.pwd}, { "Content-Type": "application-json" })
           .then((res) => {
             if (res.data.user) {
               this.$store.commit("setUser", res.data.user);

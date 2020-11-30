@@ -9,6 +9,27 @@ var pool = mysql.createPool({
     database : 'db_project'
 });
 
+var pool = mysql.createPool({
+    connectionLimit: 5,
+    host     : 'assign.bluemango.me',
+    user     : 'root',
+    password : '1234!',
+    database : 'db_project'
+});
+
+router.get('/hotdeal', function (req, res, next)  {
+    pool.getConnection(function (err, connection) {
+        connection.query("SELECT snum, sname, remainder FROM subject WHERE remainder<=3", function(err, results) {
+                if (err) {
+                    return res.json({success: false});
+                }
+                else return res.json({success: true, subject: results});
+            })
+        connection.release();
+    });
+});
+
+
 /* GET users listing. */
 router.post('/', function(req, res, next) {
     pool.getConnection(function (err, connection) {

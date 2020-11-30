@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-
     <div class="one"></div>
     <div class="geul">
       2020 DataBase Project Bluemango
@@ -9,6 +8,7 @@
 
     <left></left>           <!-- 여기가 left바-------------------------------------------------------------------------------------- -->
     <user></user>
+    <transition name="insert" appear>
     <div class="five" style=" display: table; background-color: lightgrey; position: relative">
       <p class="notice-pretty" style="margin-left: 10%; font-weight: bold; border-bottom: #825ee4; border-bottom: 1px">과목별
         <span class="notice-pretty2" style="color: #825ee4">NOTICE</span>
@@ -21,7 +21,9 @@
         </li>
       </ul>
     </div>
+    </transition>
 
+    <transition name="insert" appear>
     <div class="two" style="display: table; background-color: #5758bb">
       <table class="subject-table table" style="color: #cce5ff" >
         <thead class="thead-light" style="text-align: left; height: 10px">
@@ -40,6 +42,7 @@
         </tbody>
       </table>
     </div>
+    </transition>
 
     <div class="three" style="background-color: white">
       <div v-for="(item,index) in class_list" :style="[index === 0? {backgroundColor:'#FFA7A7'}: index===1 ?
@@ -110,6 +113,7 @@
           <td style="width: 18.9%;"></td></tr>
       </table>
     </div>
+    </transition>
   </div>
 </template>
 
@@ -145,8 +149,9 @@
   }
 </script>
 
-
+    <transition name="insert" appear>
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&display=swap');
   @import '../style/basicstyle.scss';
   @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&display=swap');
   /*시간표 테마*/
@@ -192,5 +197,15 @@
     font-weight: 400;
     color: white;
   }
-
+  .insert-item {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .insert-enter-active, .insert-leave-active {
+    transition: all 1s;
+  }
+  .insert-enter, .insert-leave-to /* .list-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    transform: translateY(30px);
+  }
 </style>

@@ -17,6 +17,7 @@
     "jquery": "^1.9.1",
     "node-sass": "^4.14.1",
     "vue": "^2.6.12",
+    "vue-blink-css": "^1.0.1",
     "vue-clickaway": "^2.2.2",
     "vue-google-charts": "^0.3.3",
     "vue-moment": "^4.1.0",

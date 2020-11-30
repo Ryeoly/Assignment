@@ -8,8 +8,12 @@
         <h4 class="card-title">학과별 수석 장학생</h4>
         <table class="card-table table">
           <tr>
-            <td colspan="1">{{major[janghaksang[this.time].pmajor]}}</td>
-            <td colspan="1">{{janghaksang[this.time].name}}</td>
+            <transition name="janghack" mode="out-in">
+              <td class="jang" v-for="(item, index) in janghaksang" colspan="1" v-if="show_list[index]" :key="item.name">{{major[item.pmajor]}}</td>
+            </transition>
+            <transition name="janghack" mode="out-in">
+              <td class="jang" v-for="(item, index) in janghaksang" colspan="1" v-if="show_list[index]" :key="item.name">{{item.name}}</td>
+            </transition>
           </tr>
         </table>
       </b-card>
@@ -157,16 +161,12 @@ export default {
       if (this.db_result.gyoyang.length !==0){
         this.gyoyang = this.db_result.gyoyang;
       }
-      console.log(this.db_result);
+      let count = this.db_result.janghak.length;
+      this.show_list = new Array(count).fill(false);
+      this.show_list[0] = true;
     })
-
-    var i = 0;
-    setInterval(function () {
-      this.time = i;
-      i++;
-      if(i===this.db_result.janghak.length || this.db_result.janghak.length===0){
-        i=0;
-      }
+    setInterval(function() {
+      this.show_list.unshift(this.show_list.pop() === true);
     }.bind(this), 3000);
 
   },
@@ -178,6 +178,7 @@ export default {
   data() {
     return {
       //여기까지 상태바////////
+      show_list: [],
       db_result: [],
       sungjeok: [{avofav: 0, semester:'20-2', chartav:0, hakjum:0}],
       db_user: [{pmajor:'null', pid:'null', pname:'null'}],
@@ -266,5 +267,21 @@ export default {
 .up-card{
   height:100%;
 }
-
+.janghack-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.janghack-enter-active, .janghack-leave-active {
+  transition: all 1s;
+}
+.janghack-enter, .janghack-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.jang {
+  text-align: center;
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
 </style>

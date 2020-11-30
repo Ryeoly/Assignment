@@ -1,6 +1,6 @@
 <template>
   <div :class="cover_show?'cover':'user'">
-    <b-dropdown id="dropdown-1" :text="info.pid+'-'+info.name" class="user_inner" size="sm" v-if="!cover_show">
+    <b-dropdown id="dropdown-1" :text="info.pid+'-'+info.name" variant="primary" class="user_inner" size="sm" v-if="!cover_show">
       <b-dropdown-item v-on:click="logout"> <b-icon icon="unlock-fill" style = "color: red"> </b-icon>  로그아웃</b-dropdown-item>
       <b-dropdown-item v-b-modal.modify> <b-icon icon="pencil-square" style = "color: red"></b-icon> 회원 정보 수정</b-dropdown-item>
     </b-dropdown>
