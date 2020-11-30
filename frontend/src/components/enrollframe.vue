@@ -6,7 +6,9 @@
 
     <div class="hot_deal_wrapper">
       <b-card>
-        <b-card-header>핫딜</b-card-header>
+        <b-card-header>
+          <b-icon icon="alarm-fill" style = "color: red;"></b-icon> 핫딜
+        </b-card-header>
         <b-card-body>
           <tr>
             <transition name="hotdeal" mode="out-in">
