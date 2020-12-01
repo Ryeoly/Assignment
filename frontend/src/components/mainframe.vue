@@ -45,7 +45,7 @@
             &nbsp;수강 과목&nbsp;
           </span>
           <span style="color: gray">
-          (2020학년도 2학기)
+          {{'(20'+ this.selected.split('-')[0] + '학년도 ' + this.selected.split('-')[1]+ '학기)'}}
           </span>
         </p>
         </thead>
