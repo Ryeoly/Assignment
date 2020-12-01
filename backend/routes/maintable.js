@@ -126,6 +126,18 @@ router.post('/reject', function (req, res, next) {
     });
 });
 
+router.post('/seme', function (req, res, next) {
+    pool.getConnection(function (err, connection) {
+        connection.query(
+            'select sub.* from score as sc, subject as sub where sc.pid = ? and sc.snum=sub.snum and sc.semester=?', [req.body.user, req.body.semes],
+            function (err, other_table) {
+                if (err) console.log(err)
+                res.json(other_table)
+            });
+        connection.release();
+    });
+});
+
 router.post('/calltable', function (req, res, next) {
     pool.getConnection(function (err, connection) {
         connection.query(

@@ -69,6 +69,7 @@ app.use('/viewdetail', viewRouter);
 app.use('/viewdetail/lookup', viewRouter);
 app.use('/viewdetail/input', viewRouter);
 app.use('/ranking', rankingRouter);
+app.use('/maintable/seme', mainRouter);
 
 
 // catch 404 and forward to error handler

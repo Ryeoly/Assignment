@@ -223,7 +223,7 @@ export default {
 }
 .searchbox {
   grid-column: 48 / 63;
-  grid-row: 26 / 30;
+  grid-row: 25 / 29;
   background-color: white;
   vertical-align: middle;
   white-space: nowrap;

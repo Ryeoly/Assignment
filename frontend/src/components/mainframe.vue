@@ -10,7 +10,6 @@
     <user></user>
     <transition name="insert" appear>
     <div class="five" style=" display: table; background-color: white; position: relative; overflow: auto">
-
       <div class="notice-title" style="font-size: x-large">
         <p style="font-weight: bolder; font-size: large; width: 100%; margin-left: 0; margin-top: 3%; margin-bottom: 3%">
           <span style="font-size: x-large; font-weight: bolder">
@@ -22,9 +21,6 @@
         </p>
       </div>
       <table class="table" style="width: 100%">
-<!--        <thead  class="notice-pretty" style="font-size: x-large; font-weight: bold; border-bottom: #825ee4">-->
-<!--            과목별<span style="color: #825ee4">NOTICE</span>-->
-<!--        </thead>-->
         <tr class="latest-notice" v-for="item in notice_list" :key="item" style="margin-left: 10%; width: 100%">
           <td style="width: 10%">
             {{$moment(item.date).format('MM/DD')}}
@@ -33,7 +29,7 @@
             {{item.sname}}
           </td>
           <td style="width: 60%;">
-            {{item.title}}
+            <router-link v-bind:to="{name: 'view', params: {index:item.idx}}">{{item.title}}</router-link>
           </td>
         </tr>
       </table>
@@ -62,6 +58,12 @@
         </tbody>
       </table>
     </div>
+    </transition>
+
+    <transition name="insert" appear>
+      <div style="grid-column: 43/51; grid-row: 19/22;">
+        <b-form-select v-on:change="formchange" v-model="selected" :options="options"></b-form-select>
+      </div>
     </transition>
 
     <transition name="insert" appear>
@@ -153,7 +155,16 @@
         class_list:[{snum:'', sname:'', grid_time:''}],
         notice_list:[],
         friend_table:[],
-        semester: '20-2'
+        semester: '20-2',
+        selected: '20-2',
+        options: [
+          { value: '20-2', text: '20-2학기' },
+          { value: '20-1', text: '20-1학기' },
+          { value: '19-2', text: '19-2학기' },
+          { value: '19-1', text: '19-1학기' },
+          { value: '18-2', text: '18-2학기' },
+          { value: '18-1', text: '18-1학기' }
+        ]
       }
     },
     computed: {
@@ -170,6 +181,11 @@
     methods: {
       go_notice: function (data){
         this.$router.push({name: 'notice', params: {snum: data}});
+      },
+      formchange: function() {
+        this.$http.post('/maintable/seme', {user: this.user, semes: this.selected}).then((response) => {
+          this.class_list = response.data;
+        })
       }
     }
   }

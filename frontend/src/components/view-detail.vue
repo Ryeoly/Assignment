@@ -5,7 +5,7 @@
     <left></left>           <!-- 여기가 left바-------------------------------------------------------------------------------------- -->
     <user></user>
 
-    <div class="view-board">
+    <div class="view-board" style="border:10px solid #FFFFFF">
       <p style="font-size: xx-large; font-weight: bolder;">강의 공지사항</p>
       <div class="board-view-header" >
         <h3 style="font-weight: bolder">{{db_result[0].title}}</h3>

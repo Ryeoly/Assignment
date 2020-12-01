@@ -71,7 +71,7 @@ router.post('/detail', function(req, res, next) {
     const result = type+'-'+number+'-'+majorr+'%';
     pool.getConnection(function (err, connection) {
         connection.query(
-            'select * from subject where snum like ?', result,
+            'select *, person.name as p_name from subject, person where subject.pid = person.pid and snum like ?', result,
             function (err, search_result) {
                 console.log(search_result);
                 if (err) console.log(err)        // 만약 에러값이 존재한다면 로그에 표시합니다.
