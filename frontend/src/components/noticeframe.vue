@@ -37,7 +37,11 @@
         다음
       </b-button>
     </div>
-
+    <div class="write-notice">
+      <b-button v-on:click="write">
+        글쓰기
+      </b-button>
+    </div>
 
     <div class="searchbox">
       <b-input-group size="sm" class="mb-2">
@@ -48,6 +52,7 @@
         <b-button v-on:click="search">검색</b-button>
       </b-input-group>
     </div>
+
     <div class="select-subject">
       <b-dropdown text="강의 목록" class="m-md-2">
         <b-dropdown-item v-for='list in this.subject_list'>
@@ -151,6 +156,9 @@ export default {
       this.$http.post('/notice/search',{Title: this.Title, snum: this.snum }).then((response) =>{
         this.notice_list=response.data;
       })
+    },
+    write : function() {
+        this.$router.push({name: 'write'});
     }
   },
   computed: {
@@ -214,6 +222,10 @@ export default {
 }
 .page-count {
   padding: 0 1rem;
+}
+.write-notice{
+  grid-column: 59 / 65;
+  grid-row: 89 / 93;
 }
 .select-subject {
   grid-column: 43 / 47;

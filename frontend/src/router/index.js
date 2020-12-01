@@ -5,6 +5,7 @@ import noticeframe from '@/components/noticeframe'
 import enrollframe from '@/components/enrollframe'
 import resultframe from '@/components/resultframe'
 import rankingframe from "@/components/rankingframe";
+import writeframe from "@/components/writeframe";
 import Login from '@/components/login'
 import SplashPage from "@/components/SplashPage";
 import Join from "@/components/join";
@@ -52,6 +53,12 @@ export default new Router({
       path: '/viewdetail/:index',
       component: view,
       name: 'view',
+      props: true
+    },
+    {
+      path: '/write',
+      name: 'write',
+      component: writeframe,
       props: true
     }
   ]
