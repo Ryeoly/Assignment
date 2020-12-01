@@ -43,23 +43,33 @@ router.post('/', function (req, res, next) {
                                                 var semester = [];
                                                 var chartav = [];
                                                 for (var i = 0; i < sungjeok.length; i++) {
-                                                    semester.push(sungjeok[i].semester);
-                                                    chartav.push(sungjeok[i].chartav);
+                                                    if(sungjeok[i].semester!=='21-1') {
+                                                        semester.push(sungjeok[i].semester);
+                                                        chartav.push(sungjeok[i].chartav);
+                                                    }
                                                 }
                                                 connection.query(
                                                     'select ps.name, ps.pmajor from person as ps, average as av where ps.pid = av.pid and av.semester = ? and avg_grade >=ALL (select avg_grade from average as k where k.pmajor = av.pmajor and k.semester =?);\n', [req.body.recent, req.body.recent],
                                                     function (err, janghak) {
                                                         if (err) console.log(err)
-                                                        res.json({
-                                                            db_user,
-                                                            db_score,
-                                                            jeongong,
-                                                            gyoyang,
-                                                            sungjeok,
-                                                            janghak,
-                                                            chartav,
-                                                            semester
-                                                        });
+
+                                                        connection.query('select * from union_average where pid = ?',
+                                                            [req.body.user], function(err, gj) {
+                                                                if (err) {
+                                                                }
+
+                                                                else return res.json({
+                                                                    db_user,
+                                                                    db_score,
+                                                                    jeongong,
+                                                                    gyoyang,
+                                                                    sungjeok,
+                                                                    janghak,
+                                                                    chartav,
+                                                                    semester,
+                                                                    gj
+                                                                });
+                                                            });
                                                     });
 
                                             });

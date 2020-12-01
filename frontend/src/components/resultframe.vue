@@ -101,8 +101,14 @@
         <div class = "leftchart">
           <GChart
             type="LineChart"
-            :data="chartData"
-            :options="chartOptions"
+            :data="chartData1"
+            :options="chartOptions1"
+            style="width:70%; margin-left:15%;"
+          />
+          <GChart
+            type="LineChart"
+            :data="chartData2"
+            :options="chartOptions2"
             style="width:70%; margin-left:15%;"
           />
         </div>
@@ -132,11 +138,22 @@ export default {
       }
       if(this.db_result.semester.length!==0){
         for(var i=(this.db_result.semester.length)-1; i>=0; i--)
-          if(this.db_result.semester[i]!=='21-1')
-            this.chartData.push([this.db_result.semester[i], Number(this.db_result.chartav[i])]);     //차트 만들기
+
+            if(this.db_result.gj[i]!==null) {
+              this.chartData1.push([this.db_result.semester[i], Number(this.db_result.chartav[i])]);
+              if(this.db_result.gj[i].semester!=='21-1')
+                this.chartData2.push([this.db_result.gj[i].semester, Number(this.db_result.gj[i].g_avg_grade),Number(this.db_result.gj[i].j_avg_grade)]);     //차트 만들기
+            }
+            else{
+              this.chartData1.push([this.db_result.semester[i], 0]);
+              this.chartData2.push([this.db_result.semester[i], 0,0]);
+            }
+
       }
       else{
-        this.chartData.push([' ',0]);
+        this.chartData1.push([' ',0]);
+        this.chartData2.push([' ',0,0]);
+
       }
 
       if (this.db_result.db_user.length !==0){
@@ -161,6 +178,7 @@ export default {
       if (this.db_result.gyoyang.length !==0){
         this.gyoyang = this.db_result.gyoyang;
       }
+
       let count = this.db_result.janghak.length;
       this.show_list = new Array(count).fill(false);
       this.show_list[0] = true;
@@ -178,6 +196,7 @@ export default {
   data() {
     return {
       //여기까지 상태바////////
+      chartav : [],
       show_list: [],
       db_result: [],
       sungjeok: [{avofav: 0, semester:'20-2', chartav:0, hakjum:0}],
@@ -212,12 +231,27 @@ export default {
       ],
       janghaksang : [{name:'', pmajor : ''}],
       time : 0,
-      chartData: [
-        ['학기', '성적']
+      chartData1: [
+        ['학기', '전체']
       ],
-      chartOptions: {
-        chart: {
-
+      chartData2: [
+        ['학기', '전공', '교양']
+      ],
+      chartOptions1: {
+        series: {
+          0: { color: '#e2431e' }
+        },
+        vAxis: {
+          viewWindow: {
+            max: 4.5,
+            min: 0
+          }
+        }
+      },
+      chartOptions2: {
+        series: {
+          0: { color: '#f88b00' },
+          1: { color: '#43459d' }
         },
         vAxis: {
           viewWindow: {
@@ -248,6 +282,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '../style/basicstyle.scss';
+
 
 .uptown{
   grid-column: 52/75;

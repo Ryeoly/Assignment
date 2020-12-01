@@ -101,6 +101,7 @@ router.post('/join', function(req, res, next) {
 });
 
 router.post('/update', function(req, res, next) {
+    console.log(req.body.info.birth);
     pool.getConnection(function (err, connection) {
         connection.query("UPDATE person SET pwd=?, tel=?, addr=?, birth=?, email=? WHERE pid=?",
             [req.body.info.pwd, req.body.info.tel, req.body.info.addr, req.body.info.birth, req.body.info.email, req.body.info.pid], function(err, results) {
