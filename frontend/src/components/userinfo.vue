@@ -29,7 +29,7 @@
           label-cols-sm="3"
           label="이름"
           label-align-sm="center"
-          label-for="nested-street"
+          label-for="name"
         >
           <b-form-input
             id="name"
@@ -234,10 +234,8 @@ export default {
     },
     resetform: function () {
       this.$http.post("/api/userinfo", {pid: this.$store.state.user.pid}).then((res) => {
-        // this.$http.post("http://localhost:3000/api/userinfo", {pid: '2016722001'}).then((res) => {
         if (res.data.isSuccess) {
           this.info = res.data.info;
-          this.info.birth = this.info.birth.substring(0, 10);
           this.old_pwd = '';
           this.new_pwd = '';
           this.new_pwd_check = '';

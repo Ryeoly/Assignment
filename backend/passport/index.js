@@ -16,7 +16,7 @@ exports.config = (passport) => {
 
     passport.deserializeUser( async (pid, done) => {
         pool.getConnection(async function (err, connection) {
-            connection.query("SELECT pid, pwd, name FROM person WHERE pid = ?", pid, function (err, results) {
+            connection.query("SELECT pid, pwd, name, admin FROM person WHERE pid = ?", pid, function (err, results) {
                 if (results.length !== 0) done(null, results[0]);
                 else done(null, false);
             })

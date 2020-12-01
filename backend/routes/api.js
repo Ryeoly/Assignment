@@ -47,7 +47,7 @@ router.get('/logout', function (req, res, next){
 
 router.post('/userinfo', function (req, res, next){
     pool.getConnection(function (err, connection) {
-        connection.query("SELECT * FROM person WHERE pid=?", [req.body.pid], function(err, results) {
+        connection.query("SELECT pid, pwd, name, tel, addr, DATE_FORMAT(birth, '%Y-%m-%d') AS birth, email FROM person WHERE pid=?", [req.body.pid], function(err, results) {
             if (err) throw err;
             else {
                 if (results.length === 1) res.json({isSuccess: true, info: results[0]});

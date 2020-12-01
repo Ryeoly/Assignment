@@ -22,7 +22,6 @@ var apiRouter = require('./routes/api')
 var noticeRouter = require('./routes/notice');
 var viewRouter = require('./routes/viewdetail');
 var rankingRouter = require('./routes/ranking');
-var writeRouter = require('./routes/write');
 var app = express();
 
 // view engine setup
@@ -70,7 +69,6 @@ app.use('/viewdetail/lookup', viewRouter);
 app.use('/viewdetail/input', viewRouter);
 app.use('/ranking', rankingRouter);
 app.use('/maintable/seme', mainRouter);
-app.use('/write',writeRouter);
 
 
 // catch 404 and forward to error handler

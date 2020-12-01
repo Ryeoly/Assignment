@@ -38,7 +38,7 @@
       </b-button>
     </div>
     <div class="write-notice">
-      <b-button v-on:click="write">
+      <b-button v-on:click="write" v-if="this.isAdmin!==0">
         글쓰기
       </b-button>
     </div>
@@ -111,9 +111,11 @@ export default {
       console.log(this.notice_list);
       console.log(response.data)
     })
+    this.isAdmin = this.$store.state.user.admin;
   },
   data(){
     return {
+      isAdmin: 0,
       semester:'20-2',         //이거갖고있어야되는 현재 학기
       db_result: [],
       subject_list:[],
@@ -158,7 +160,7 @@ export default {
       })
     },
     write : function() {
-        this.$router.push({name: 'write'});
+        this.$router.push({name: 'write', params: { snum: this.snum }});
     }
   },
   computed: {

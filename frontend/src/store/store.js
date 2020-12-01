@@ -13,7 +13,7 @@ export const store = new Vuex.Store({
   getters: {
     user: (state) => { return state.user; },
     apply_list: (state) => { return state.apply_list },
-    friend_list: (state) => { return state.friend_list }
+    friend_list: (state) => { return state.friend_list },
   },
   mutations: {
     setUser(state, user) {

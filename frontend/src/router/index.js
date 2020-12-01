@@ -56,7 +56,7 @@ export default new Router({
       props: true
     },
     {
-      path: '/write',
+      path: '/write/:snum',
       name: 'write',
       component: writeframe,
       props: true

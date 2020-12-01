@@ -54,6 +54,7 @@
           <td class="border4" style="margin-bottom: 1%">&nbsp;{{ item.sname}} ({{ item.stime}})</td>
           <td class="border5">
                 <button style="background-color: #ffac71; border: 2px solid #ffac71; border-radius: 5px; color: white; font-weight: bold" v-on:click="go_notice(item.snum)">공지사항</button>
+          </td>
         </tr>
         </tbody>
       </table>
@@ -118,7 +119,8 @@
           <td style="width: 18.9%;"></td>
           <td style="width: 19%;"></td>
           <td style="width: 18.9%;"></td>
-          <td style="width: 18.9%;"></td></tr>
+          <td style="width: 18.9%;"></td>
+        </tr>
         <tr style="height: 15.6%;">
           <td style="width: 5.1%;">5</td>
           <td style="width: 19.1%;"></td>
@@ -133,7 +135,8 @@
           <td style="width: 18.9%;"></td>
           <td style="width: 19%;"></td>
           <td style="width: 18.9%;"></td>
-          <td style="width: 18.9%;"></td></tr>
+          <td style="width: 18.9%;"></td>
+        </tr>
       </table>
     </div>
     </transition>

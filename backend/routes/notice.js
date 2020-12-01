@@ -44,5 +44,18 @@ router.post('/search', function (req, res, next) {
         connection.release();
     });
 });
+router.post('/write', function (req, res, next) {
+    console.log(req.body);
+    pool.getConnection(function (err, connection) {
+        connection.query(
+            'INSERT INTO notice(snum, title, content, file, writer, hit) value (?,?,?,?,?,?)',
+            [req.body.post.snum, req.body.post.title, req.body.post.content, req.body.post.file, req.body.post.writer, 0],
+            function (err, rows) {
+                if (err) console.log(err)
+                res.json({success: false});
+            });
+        connection.release({success: true});
+    });
+});
 
 module.exports = router;

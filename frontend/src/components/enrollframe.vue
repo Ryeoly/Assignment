@@ -7,7 +7,7 @@
     <div class="hot_deal_wrapper">
       <b-card>
         <b-card-header>
-          <b-icon icon="alarm-fill" style = "color: red;"></b-icon> 핫딜
+          <b-icon icon="alarm-fill" animation="cylon" style = "color: red;"></b-icon> 핫딜
         </b-card-header>
         <b-card-body>
           <tr>
