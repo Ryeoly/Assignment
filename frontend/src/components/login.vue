@@ -6,7 +6,7 @@
       <div class="welcome_msg_wrapper"> </div>
       <div class="footer"> </div>
       <div class="header_logo"></div>
-      <div class="welcome_msg">2020 DBMS<br>Bluemango Team Project</div>
+      <div class="welcome_msg">2020 DBMS<br>Bluemango Team</div>
       <div class="copyright"> <p>copyright</p> </div>
       <div class="link"> <p>link</p> </div>
       <transition-group name="list" tag="div" class="login_wrapper" appear>

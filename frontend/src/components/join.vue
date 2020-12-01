@@ -21,7 +21,7 @@
                             :label-for="item"
                             label-align="center"
                             :key="item"
-                            :style="[item === 'PW' ? {padding: pw_padding+'px 0 0 0'} : {padding: '27px 0 0 0'}]"
+                            :style="[item === 'PW' ? {padding: pw_padding+'px 20px 0 0'} : {padding: '20px 20px 0 0'}]"
               >
                 <b-form-input :id="item" :key="item" v-model="user_input[item]" :placeholder="item" v-if="item !== 'ID' && item !== 'Birth' && item !=='PW' && item !=='PW_Check' && item !== 'Tel' && item !== 'email'" :state="state_list[item]"></b-form-input>
                 <b-form-input :id="item" v-model="user_input[item]" class="password" type="password" v-else-if="item === 'PW'" :state="state_list['PW']" v-on:keyup="check_PW()"></b-form-input>
@@ -71,7 +71,7 @@
       <div class="copyright"></div>
       <div class="link"></div>
       <div class="header_logo"></div>
-      <div class="welcome_msg">2020 DBMS<br>Bluemango Team Project</div>
+      <div class="welcome_msg">2020 DBMS<br>Bluemango Team</div>
     </div>
     <div class="sam"></div>
     <div class="sagak"></div>
@@ -205,6 +205,9 @@ div {
 .card {
   border-radius: 2% !important;
 }
+.card-body {
+  padding:0;
+}
 
 .join_inner {
   grid-area: 1 / 6 / 20 / 14;
@@ -334,7 +337,7 @@ export default {
         '2019',
         '2020'
       ],
-      pw_padding : 27,
+      pw_padding : 20,
       hakbun_msg: ''
     }
   },
@@ -371,11 +374,11 @@ export default {
     },
     hakbungen() {
       if(this.user_input.ID.p_year==null || this.user_input.ID.p_major==null) {
-        this.pw_padding = 27;
+        this.pw_padding = 20;
         this.hakbun_msg =  '';
       }
       else {
-        this.pw_padding = 4;
+        this.pw_padding = 2;
         this.$http.post('http://localhost:3000/api/join-pid', this.user_input.ID).then(response => {
           this.hakbun_msg = "학번은 "+response.data.next+" 입니다.";
         });
